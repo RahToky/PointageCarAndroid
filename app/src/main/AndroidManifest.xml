@@ -3,6 +3,7 @@
     package="mg.pulse.pointagecar">
 
     <uses-permission android:name="android.permission.NFC" />
+
     <uses-feature android:name="android.hardware.nfc" />
 
     <application
@@ -13,17 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PointageCar">
         <activity
-            android:name=".models.activities.NfcActivity"
-            android:label="@string/title_activity_nfc"
-            android:theme="@style/Theme.PointageCar.NoActionBar">
+            android:name=".models.activities.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_splash"
+            android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".models.activities.MainActivity">
+        <activity
+            android:name=".models.activities.NfcActivity"
+            android:label="@string/title_activity_nfc"
+            android:theme="@style/Theme.PointageCar.NoActionBar">
         </activity>
+        <activity android:name=".models.activities.MainActivity"></activity>
     </application>
 
 </manifest>

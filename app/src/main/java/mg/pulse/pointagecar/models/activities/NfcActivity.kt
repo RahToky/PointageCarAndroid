@@ -1,13 +1,14 @@
 package mg.pulse.pointagecar.models.activities
 
 import android.content.Intent
+import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
+import android.nfc.tech.Ndef
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import mg.pulse.pointagecar.R
+
 
 class NfcActivity: BaseActivity() {
 
@@ -50,5 +51,6 @@ class NfcActivity: BaseActivity() {
     private fun handleIntent(intent: Intent){
         nfcMessage.text = "handleIntent"
     }
+
 
 }
