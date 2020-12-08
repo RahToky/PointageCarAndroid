@@ -30,8 +30,8 @@ class SplashActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_splash)
 
-        Handler().postDelayed({ /* Create an Intent that will start the Menu-Activity. */
-            val mainIntent = Intent(this, MainActivity::class.java)
+        Handler().postDelayed({
+            val mainIntent = Intent(this, PointageActivity::class.java)
             this@SplashActivity.startActivity(mainIntent)
             this@SplashActivity.finish()
         }, SPLASH_DISPLAY_LENGTH)

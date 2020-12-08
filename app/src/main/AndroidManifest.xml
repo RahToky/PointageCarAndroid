@@ -16,7 +16,7 @@
         <activity
             android:name=".models.activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_splash"
+            android:label="@string/app_name"
             android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,9 +27,8 @@
         <activity
             android:name=".models.activities.NfcActivity"
             android:label="@string/title_activity_nfc"
-            android:theme="@style/Theme.PointageCar.NoActionBar">
-        </activity>
-        <activity android:name=".models.activities.MainActivity"></activity>
+            android:theme="@style/Theme.PointageCar.NoActionBar"></activity>
+        <activity android:name=".models.activities.PointageActivity" android:theme="@style/Theme.PointageCar.NoActionBar" />
     </application>
 
 </manifest>
