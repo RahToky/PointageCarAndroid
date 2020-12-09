@@ -1,4 +1,4 @@
-package mg.pulse.pointagecar.models.activities
+package mg.pulse.pointagecar.views.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar

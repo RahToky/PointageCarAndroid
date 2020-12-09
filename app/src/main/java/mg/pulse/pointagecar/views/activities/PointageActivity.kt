@@ -1,4 +1,4 @@
-package mg.pulse.pointagecar.models.activities
+package mg.pulse.pointagecar.views.activities
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -7,13 +7,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import mg.pulse.pointagecar.R
 import mg.pulse.pointagecar.viewmodels.CollaboViewModel
 import mg.pulse.pointagecar.views.PointageAdapter
-import java.security.AccessController.getContext
 
 class PointageActivity:BaseActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var pointageAdapter: PointageAdapter
-    private var collaboViewModel:CollaboViewModel = CollaboViewModel()
+    private val collaboViewModel:CollaboViewModel = CollaboViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

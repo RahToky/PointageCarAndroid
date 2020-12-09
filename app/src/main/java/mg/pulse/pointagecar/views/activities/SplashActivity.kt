@@ -1,4 +1,4 @@
-package mg.pulse.pointagecar.models.activities
+package mg.pulse.pointagecar.views.activities
 
 import android.content.Intent
 import android.os.Bundle

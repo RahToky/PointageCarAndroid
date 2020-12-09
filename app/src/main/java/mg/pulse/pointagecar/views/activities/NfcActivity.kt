@@ -1,9 +1,7 @@
-package mg.pulse.pointagecar.models.activities
+package mg.pulse.pointagecar.views.activities
 
 import android.content.Intent
-import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
-import android.nfc.tech.Ndef
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast

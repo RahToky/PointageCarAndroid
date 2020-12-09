@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PointageCar">
         <activity
-            android:name=".models.activities.SplashActivity"
+            android:name="mg.pulse.pointagecar.views.activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/splashScreenTheme">
@@ -25,10 +25,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".models.activities.NfcActivity"
+            android:name="mg.pulse.pointagecar.views.activities.NfcActivity"
             android:label="@string/title_activity_nfc"
             android:theme="@style/Theme.PointageCar.NoActionBar"></activity>
-        <activity android:name=".models.activities.PointageActivity" android:theme="@style/Theme.PointageCar.NoActionBar" />
+        <activity android:name="mg.pulse.pointagecar.views.activities.PointageActivity" android:theme="@style/Theme.PointageCar.NoActionBar" />
     </application>
 
 </manifest>
