@@ -9,9 +9,9 @@ import mg.pulse.pointagecar.R
 import mg.pulse.pointagecar.models.entities.Collaborateur
 import java.lang.ref.WeakReference
 
-class PointageAdapter(collaborateurList: List<Collaborateur>) : RecyclerView.Adapter<PointageViewHolder>() {
+class PointageAdapter() : RecyclerView.Adapter<PointageViewHolder>() {
 
-    private val collaboList: List<Collaborateur> = collaborateurList
+    private var collaboList: List<Collaborateur> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PointageViewHolder =
         PointageViewHolder(
@@ -22,6 +22,11 @@ class PointageAdapter(collaborateurList: List<Collaborateur>) : RecyclerView.Ada
         holder.setItem(collaboList.get(position), "06:0${position + 2}")
 
     override fun getItemCount(): Int = collaboList.size
+
+    fun updateList(list:List<Collaborateur>){
+        collaboList = list
+        notifyDataSetChanged()
+    }
 }
 
 
@@ -32,8 +37,8 @@ class PointageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private var checkHourTv: TextView = itemView.findViewById(R.id.collaboCheckHourTv)
 
     fun setItem(collabo: Collaborateur, hours: String) {
-        firstNameTv.text = collabo.firstName
-        lastNameTv.text = collabo.lastName
+        firstNameTv.text = collabo.prenom
+        lastNameTv.text = collabo.nom
         checkHourTv.text = hours
     }
 }

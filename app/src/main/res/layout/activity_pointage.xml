@@ -22,12 +22,23 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.google.android.material.card.MaterialCardView
+        app:cardBackgroundColor="@color/gray"
+        app:cardElevation="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:background="@color/lightWhite"
+        android:background="@color/white"
+        android:divider="@color/red"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:layout_marginTop="65dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:paddingTop="2dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

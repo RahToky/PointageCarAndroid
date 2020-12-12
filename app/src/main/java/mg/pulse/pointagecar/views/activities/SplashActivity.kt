@@ -15,7 +15,7 @@ import mg.pulse.pointagecar.R
  */
 class SplashActivity : AppCompatActivity() {
 
-    private val SPLASH_DISPLAY_LENGTH:Long = 2300;
+    private val SPLASH_DISPLAY_LENGTH:Long = 1000;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
