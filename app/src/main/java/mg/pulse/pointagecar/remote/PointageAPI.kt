@@ -2,6 +2,7 @@ package mg.pulse.pointagecar.remote
 
 import androidx.lifecycle.LiveData
 import mg.pulse.pointagecar.models.entities.Collaborateur
+import mg.pulse.pointagecar.models.entities.Ramassage
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,5 +31,8 @@ interface PointageAPI {
 
     @GET("api/collaborateurs")
     suspend fun getCollaborateurs(): List<Collaborateur>
+
+    @GET("api/ramassages")
+    suspend fun getRamassages(): List<Ramassage>
 
 }

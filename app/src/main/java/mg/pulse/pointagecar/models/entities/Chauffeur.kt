@@ -1,21 +1,18 @@
 package mg.pulse.pointagecar.models.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import okio.BufferedSource
 
-data class Collaborateur(
+class Chauffeur(
     @SerializedName("id") @Expose var id: String,
-    @SerializedName("matricule") @Expose var matricule: String,
     @SerializedName("nom") @Expose var nom: String,
     @SerializedName("prenom") @Expose var prenom: String,
-    @SerializedName("telephone") @Expose var telephone: String
+    @SerializedName("cin") @Expose var cin: String,
+    @SerializedName("telephone") @Expose var telephone: String,
+    @SerializedName("deleted") @Expose var isDeleted: Boolean
 ) : ResponseBody() {
 
     override fun contentLength(): Long = contentLength()

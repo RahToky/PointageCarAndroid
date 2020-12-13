@@ -10,6 +10,6 @@ open class BaseActivity:AppCompatActivity() {
     protected fun initToolbar(title:String){
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(findViewById(R.id.toolbar))
-        toolbar.title = title
+        supportActionBar?.title = title
     }
 }

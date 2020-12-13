@@ -14,7 +14,7 @@ class NfcActivity: BaseActivity() {
     private lateinit var nfcMessage:TextView
 
     // OTHERS
-    private lateinit var nfcAdapter: NfcAdapter
+    private var nfcAdapter: NfcAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +28,7 @@ class NfcActivity: BaseActivity() {
             finish();
             return;
         }
-        if (!nfcAdapter.isEnabled()) {
+        if (nfcAdapter!!.isEnabled()) {
             nfcMessage.text = "NFC is disabled."
         } else {
             nfcMessage.text = "NFC ok"
