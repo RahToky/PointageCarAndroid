@@ -35,4 +35,7 @@ interface PointageAPI {
     @GET("api/ramassages")
     suspend fun getRamassages(): List<Ramassage>
 
+    @GET("api/ramassages/dateandcar?date={date}&idcar={idCar}")
+    suspend fun getRamassagesByDateAndCar(@Path("idCar") idCar:String, @Path("date") date:String): List<Ramassage>
+
 }

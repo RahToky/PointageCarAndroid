@@ -29,10 +29,8 @@ class PointageActivity : BaseActivity() {
         initViews()
         pointageViewModel.initAPI(CAR_ID)
         getCurrentRamassage()
-
         var simpleDateFormat: SimpleDateFormat = SimpleDateFormat("dd-MM-yyyy")
         dateRamassageTv.text = simpleDateFormat.format(Date())
-
 
     }
 
@@ -47,9 +45,8 @@ class PointageActivity : BaseActivity() {
 
     private fun getCurrentRamassage() {
         pointageViewModel.getCurrentRamassage().observe(this, Observer {
-            val collaboList = pointageViewModel.getCollaboInRamassage(it)
-            pointageAdapter.updateList(collaboList)
-            ramassageSizeTv.text = collaboList.size.toString()
+            pointageAdapter.updateList(it)
+            ramassageSizeTv.text = it.size.toString()
         })
     }
 }

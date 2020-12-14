@@ -7,11 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import mg.pulse.pointagecar.R
 import mg.pulse.pointagecar.models.entities.Collaborateur
-import java.lang.ref.WeakReference
+import mg.pulse.pointagecar.models.entities.Ramassage
 
 class PointageAdapter() : RecyclerView.Adapter<PointageViewHolder>() {
 
-    private var collaboList: List<Collaborateur> = listOf()
+    private var ramassageList: List<Ramassage> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PointageViewHolder =
         PointageViewHolder(
@@ -19,12 +19,12 @@ class PointageAdapter() : RecyclerView.Adapter<PointageViewHolder>() {
         )
 
     override fun onBindViewHolder(holder: PointageViewHolder, position: Int) =
-        holder.setItem(collaboList.get(position), "06:0${position + 2}")
+        holder.setItem(ramassageList[position])
 
-    override fun getItemCount(): Int = collaboList.size
+    override fun getItemCount(): Int = ramassageList.size
 
-    fun updateList(list:List<Collaborateur>){
-        collaboList = list
+    fun updateList(list:List<Ramassage>){
+        ramassageList = list
         notifyDataSetChanged()
     }
 }
@@ -36,9 +36,9 @@ class PointageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private var lastNameTv: TextView = itemView.findViewById(R.id.collaboLastnameTv)
     private var checkHourTv: TextView = itemView.findViewById(R.id.collaboCheckHourTv)
 
-    fun setItem(collabo: Collaborateur, hours: String) {
-        firstNameTv.text = collabo.prenom
-        lastNameTv.text = collabo.nom
-        checkHourTv.text = hours
+    fun setItem(ramassage: Ramassage) {
+        firstNameTv.text = ramassage.collaborateur.prenom
+        lastNameTv.text = ramassage.collaborateur.nom
+        checkHourTv.text = ramassage.heureRamassage
     }
 }

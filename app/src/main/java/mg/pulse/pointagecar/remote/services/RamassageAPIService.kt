@@ -1,18 +1,20 @@
 package mg.pulse.pointagecar.remote.services
 
+import android.util.Log
 import mg.pulse.pointagecar.models.entities.Collaborateur
 import mg.pulse.pointagecar.models.entities.Ramassage
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RamassageAPIService : BaseAPIService() {
 
-    suspend fun getRamassagesByIdCar(idCar: String): List<Ramassage> =
-        pointageAPI?.getRamassages()?.filter { it.car.id == idCar } ?: listOf()
+    suspend fun getRamassagesByDate(idCar:String, dateRamassage:String): List<Ramassage>{
+        return pointageAPI?.getRamassagesByDateAndCar(idCar,dateRamassage)?: listOf()
+    }
 
-    fun getCollaborateurs(ramassageList:List<Ramassage>? = listOf()):MutableList<Collaborateur>{
-        var collaboList:MutableList<Collaborateur> = mutableListOf()
-        for((i,ramassage) in ramassageList?.withIndex()!!){
-            collaboList[i] = ramassage.collaborateur
-        }
-        return collaboList
+    suspend fun getCurrentRamassages(idCar:String): List<Ramassage>{
+        var simpleDateFormat:DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        return getRamassagesByDate(idCar,simpleDateFormat.format(Date()))
     }
 }

@@ -32,5 +32,4 @@
             android:theme="@style/Theme.PointageCar.NoActionBar"></activity>
         <activity android:name="mg.pulse.pointagecar.views.activities.PointageActivity" android:theme="@style/Theme.PointageCar.NoActionBar" />
     </application>
-
 </manifest>

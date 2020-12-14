@@ -12,7 +12,8 @@ data class Ramassage(
     @SerializedName("collaborateur") @Expose var collaborateur: Collaborateur,
     @SerializedName("car") @Expose var car: Car,
     @SerializedName("dateramassage") @Expose var dateRamassage: String,
-    @SerializedName("is_deleted") @Expose var isDelete: Boolean
+    @SerializedName("heureramassage") @Expose var heureRamassage: String,
+    @SerializedName("deleted") @Expose var deleted: Boolean
 ) : ResponseBody() {
 
     var isSent: Boolean = false
@@ -22,9 +23,10 @@ data class Ramassage(
         collaborateur: Collaborateur,
         car: Car,
         dateRamassage: String,
+        heureRamassage: String,
         isDelete: Boolean,
         isSent: Boolean
-    ) : this(id, collaborateur, car,dateRamassage, isDelete) {
+    ) : this(id, collaborateur, car,dateRamassage,heureRamassage, isDelete) {
         this.isSent = isSent
     }
 
