@@ -11,5 +11,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="veuillez_rapprocher_votre_badge">Veuillez rapprocher votre badge</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="pointage_du_jour">Fiche de présence</string>
+    <string name="ramassage">Ramassage</string>
 </resources>

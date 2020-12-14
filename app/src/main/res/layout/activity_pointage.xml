@@ -11,22 +11,33 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:elevation="0dp"
         android:theme="@style/Theme.PointageCar.AppBarOverlay">
 
+        <!--
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/red"
-            app:popupTheme="@style/Theme.PointageCar.PopupOverlay" />
+            app:popupTheme="@style/Theme.PointageCar.PopupOverlay" />-->
+        <include layout="@layout/custom_toolbar"/>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/red"/>
+
     <com.google.android.material.card.MaterialCardView
-        app:cardBackgroundColor="@color/gray"
+        app:cardBackgroundColor="@color/light_blue_900"
         app:cardElevation="10dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,7 +92,6 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:background="@color/white"
         android:divider="@color/red"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

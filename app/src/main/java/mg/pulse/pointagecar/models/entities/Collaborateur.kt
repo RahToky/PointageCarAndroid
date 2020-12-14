@@ -18,6 +18,9 @@ data class Collaborateur(
     @SerializedName("telephone") @Expose var telephone: String
 ) : ResponseBody() {
 
+    val fullName: String
+    get(){ return nom+" "+prenom}
+
     override fun contentLength(): Long = contentLength()
     override fun contentType(): MediaType? = contentType()
     override fun source(): BufferedSource {

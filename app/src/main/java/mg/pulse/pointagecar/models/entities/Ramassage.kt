@@ -16,20 +16,6 @@ data class Ramassage(
     @SerializedName("deleted") @Expose var deleted: Boolean
 ) : ResponseBody() {
 
-    var isSent: Boolean = false
-
-    constructor(
-        id: String,
-        collaborateur: Collaborateur,
-        car: Car,
-        dateRamassage: String,
-        heureRamassage: String,
-        isDelete: Boolean,
-        isSent: Boolean
-    ) : this(id, collaborateur, car,dateRamassage,heureRamassage, isDelete) {
-        this.isSent = isSent
-    }
-
     override fun contentLength(): Long = contentLength()
     override fun contentType(): MediaType? = contentType()
     override fun source(): BufferedSource {

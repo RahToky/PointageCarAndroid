@@ -25,13 +25,14 @@ class PointageViewModel: ViewModel() {
     fun initAPI(idCar:String, dateRamassage: String? = simpleDateFormat.format(Date())){
         this.dateRamassage = dateRamassage!!
         Log.i("MyTag","Date=${dateRamassage}")
-        val errorHandler = CoroutineExceptionHandler { _, exception ->{}}
+        val errorHandler = CoroutineExceptionHandler { _, exception ->Log.i("MyTag","Exception === ${exception.message}")}
         coroutineScope.launch(errorHandler){
             currentRamassageList.value = ramassageAPIRepository.getRamassagesByDate(idCar,dateRamassage)
+
         }
     }
 
-    fun getCurrentRamassage() = currentRamassageList
+    fun getCurrentRamassages() = currentRamassageList
 
     override fun onCleared() {
         super.onCleared()

@@ -8,6 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 interface PointageAPI {
@@ -35,7 +36,7 @@ interface PointageAPI {
     @GET("api/ramassages")
     suspend fun getRamassages(): List<Ramassage>
 
-    @GET("api/ramassages/dateandcar?date={date}&idcar={idCar}")
-    suspend fun getRamassagesByDateAndCar(@Path("idCar") idCar:String, @Path("date") date:String): List<Ramassage>
+    @GET("api/ramassages/dateandcar")
+    suspend fun getRamassagesByDateAndCar(@Query("idcar") idCar:String, @Query("date") date:String): List<Ramassage>
 
 }

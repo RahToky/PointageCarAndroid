@@ -13,7 +13,6 @@ class Car(
     @SerializedName("deleted") @Expose var isDeleted: Boolean
 ) : ResponseBody() {
 
-
     override fun contentLength(): Long = contentLength()
     override fun contentType(): MediaType? = contentType()
     override fun source(): BufferedSource {
