@@ -1,9 +1,7 @@
-package mg.pulse.pointagecar.models.activities
+package mg.pulse.pointagecar.views.activities
 
 import android.content.Intent
-import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
-import android.nfc.tech.Ndef
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
@@ -16,7 +14,7 @@ class NfcActivity: BaseActivity() {
     private lateinit var nfcMessage:TextView
 
     // OTHERS
-    private lateinit var nfcAdapter: NfcAdapter
+    private var nfcAdapter: NfcAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +28,7 @@ class NfcActivity: BaseActivity() {
             finish();
             return;
         }
-        if (!nfcAdapter.isEnabled()) {
+        if (nfcAdapter!!.isEnabled()) {
             nfcMessage.text = "NFC is disabled."
         } else {
             nfcMessage.text = "NFC ok"

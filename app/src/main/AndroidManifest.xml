@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="mg.pulse.pointagecar">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.NFC" />
-
     <uses-feature android:name="android.hardware.nfc" />
 
     <application
@@ -12,11 +13,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".App"
         android:theme="@style/Theme.PointageCar">
         <activity
-            android:name=".models.activities.SplashActivity"
+            android:name="mg.pulse.pointagecar.views.activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_splash"
+            android:label="@string/app_name"
             android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,11 +27,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".models.activities.NfcActivity"
+            android:name="mg.pulse.pointagecar.views.activities.NfcActivity"
             android:label="@string/title_activity_nfc"
-            android:theme="@style/Theme.PointageCar.NoActionBar">
-        </activity>
-        <activity android:name=".models.activities.MainActivity"></activity>
+            android:theme="@style/Theme.PointageCar.NoActionBar"></activity>
+        <activity android:name="mg.pulse.pointagecar.views.activities.PointageActivity" android:theme="@style/Theme.PointageCar.NoActionBar" />
     </application>
-
 </manifest>
