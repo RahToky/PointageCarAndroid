@@ -17,15 +17,19 @@ class PointageViewModel: ViewModel() {
     private val parentJob = SupervisorJob()
     private val coroutineScope = CoroutineScope(parentJob + Dispatchers.Main)
     private val ramassageAPIRepository: RamassageAPIService = RamassageAPIService()
-    var simpleDateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-    private lateinit var dateRamassage:String
+    private val simpleDateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
 
+    private lateinit var dateRamassage:String
     private var currentRamassageList: MutableLiveData<List<Ramassage>> = MutableLiveData<List<Ramassage>>()
 
     fun initAPI(idCar:String, dateRamassage: String? = simpleDateFormat.format(Date())){
         this.dateRamassage = dateRamassage!!
-        Log.i("MyTag","Date=${dateRamassage}")
-        val errorHandler = CoroutineExceptionHandler { _, exception ->Log.i("MyTag","Exception === ${exception.message}")}
+        val errorHandler = CoroutineExceptionHandler { _, exception ->
+            Log.i("MyTag","Exception === ${exception.message}")
+            if(exception.message?.compareTo("timeout",true) == 0){
+                initAPI(idCar, dateRamassage)
+            }
+        }
         coroutineScope.launch(errorHandler){
             currentRamassageList.value = ramassageAPIRepository.getRamassagesByDate(idCar,dateRamassage)
 

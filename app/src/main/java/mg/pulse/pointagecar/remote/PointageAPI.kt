@@ -30,13 +30,13 @@ interface PointageAPI {
         }
     }
 
-    @GET("api/collaborateurs")
+    @GET("api/collaborateur")
     suspend fun getCollaborateurs(): List<Collaborateur>
 
-    @GET("api/ramassages")
+    @GET("api/ramassage")
     suspend fun getRamassages(): List<Ramassage>
 
-    @GET("api/ramassages/dateandcar")
+    @GET("api/ramassage/dateandcar")
     suspend fun getRamassagesByDateAndCar(@Query("idcar") idCar:String, @Query("date") date:String): List<Ramassage>
 
 }
