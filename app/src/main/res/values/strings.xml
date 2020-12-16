@@ -12,4 +12,12 @@
     <string name="veuillez_rapprocher_votre_badge">Veuillez rapprocher votre badge</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="ramassage">Ramassage</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+
+    <!-- Used in NavigationDrawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

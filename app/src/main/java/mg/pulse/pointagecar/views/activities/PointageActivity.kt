@@ -32,7 +32,7 @@ class PointageActivity : BaseActivity() , ItemClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pointage)
-        initToolbar(resources.getString(R.string.ramassage))
+        configToolbar(resources.getString(R.string.ramassage))
         initViews()
         initListeners()
         var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")

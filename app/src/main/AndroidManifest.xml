@@ -8,15 +8,20 @@
     <uses-feature android:name="android.hardware.nfc" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".App"
         android:theme="@style/Theme.PointageCar">
+
         <activity
-            android:name="mg.pulse.pointagecar.views.activities.SplashActivity"
+            android:name=".views.activities.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.PointageCar.NoActionBar"/>
+        <activity
+            android:name=".views.activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/splashScreenTheme">
@@ -27,9 +32,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="mg.pulse.pointagecar.views.activities.NfcActivity"
+            android:name=".views.activities.NfcActivity"
             android:label="@string/title_activity_nfc"
-            android:theme="@style/Theme.PointageCar.NoActionBar"></activity>
-        <activity android:name="mg.pulse.pointagecar.views.activities.PointageActivity" android:theme="@style/Theme.PointageCar.NoActionBar" />
+            android:theme="@style/Theme.PointageCar.NoActionBar" />
+        <activity
+            android:name=".views.activities.PointageActivity"
+            android:theme="@style/Theme.PointageCar.NoActionBar" />
     </application>
+
 </manifest>
