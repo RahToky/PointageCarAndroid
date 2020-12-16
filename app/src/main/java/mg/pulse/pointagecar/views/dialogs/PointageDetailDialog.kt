@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import mg.pulse.pointagecar.R
 import mg.pulse.pointagecar.models.entities.Collaborateur
+import mg.pulse.pointagecar.models.utils.formatPhoneNumberMG
 
 class PointageDetailDialog : DialogFragment() {
 
@@ -47,7 +48,7 @@ class PointageDetailDialog : DialogFragment() {
         matriculeTv?.text = collaborateur?.matricule
         nomTv?.text = collaborateur?.nom
         prenomTv?.text = collaborateur?.prenom
-        telephoneTv?.text = collaborateur?.telephone
+        telephoneTv?.text = formatPhoneNumberMG(collaborateur?.telephone)
     }
 
     private fun initViews(view: View) {

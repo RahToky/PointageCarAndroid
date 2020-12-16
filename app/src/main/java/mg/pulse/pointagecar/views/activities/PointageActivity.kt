@@ -1,7 +1,8 @@
 package mg.pulse.pointagecar.views.activities
 
+import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,7 @@ class PointageActivity : BaseActivity() , ItemClickListener{
     private lateinit var dateRamassageTv: TextView
     private lateinit var swipeRefreshLayout:SwipeRefreshLayout
     private var pointageDetailDialog:PointageDetailDialog = PointageDetailDialog()
+    private lateinit var calendarLayout:LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +35,9 @@ class PointageActivity : BaseActivity() , ItemClickListener{
         initToolbar(resources.getString(R.string.ramassage))
         initViews()
         initListeners()
-        getCurrentRamassage()
-        var simpleDateFormat: SimpleDateFormat = SimpleDateFormat("dd-MM-yyyy")
+        var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
         dateRamassageTv.text = simpleDateFormat.format(Date())
-
+        getCurrentRamassage()
     }
 
     private fun initListeners(){
@@ -44,11 +45,25 @@ class PointageActivity : BaseActivity() , ItemClickListener{
             swipeRefreshLayout.isRefreshing = true
             getCurrentRamassage()
         }
+
+        calendarLayout.setOnClickListener {
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            val dpd = DatePickerDialog(this@PointageActivity, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                dateRamassageTv.text = "$year-${monthOfYear+1}-$dayOfMonth"
+                getCurrentRamassage()
+            }, year, month, day)
+            dpd.show()
+        }
     }
 
     private fun initViews() {
-        ramassageSizeTv = findViewById(R.id.ramassageSizeTv)
+        calendarLayout = findViewById(R.id.calendarLayout)
         dateRamassageTv = findViewById(R.id.dateRamassageTv)
+        ramassageSizeTv = findViewById(R.id.ramassageSizeTv)
         recyclerView = findViewById(R.id.recyclerView)
         swipeRefreshLayout = findViewById(R.id.swipe_layout)
         pointageAdapter = PointageAdapter(this)
@@ -57,8 +72,8 @@ class PointageActivity : BaseActivity() , ItemClickListener{
     }
 
     private fun getCurrentRamassage() {
-        pointageViewModel.initAPI(CAR_ID)
-        pointageViewModel.getCurrentRamassages().observe(this, Observer {
+        pointageViewModel.initAPI(CAR_ID, dateRamassageTv.text.toString())
+        pointageViewModel.getRamassages().observe(this, Observer {
             pointageAdapter.updateList(it)
             ramassageSizeTv.text = it.size.toString()
             swipeRefreshLayout.isRefreshing = false
