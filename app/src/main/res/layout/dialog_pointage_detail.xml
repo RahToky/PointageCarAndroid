@@ -8,7 +8,7 @@
     android:paddingTop="20dp"
     android:paddingBottom="20dp"
     android:gravity="center"
-    android:weightSum="10">
+    android:weightSum="12">
 
     <ImageView
         android:layout_width="0dp"
@@ -58,6 +58,29 @@
             android:layout_height="wrap_content"
             android:textColor="@color/gray"
             android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/smsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@android:color/holo_blue_dark"
+            android:src="@drawable/ic_sms"/>
+
+        <ImageButton
+            android:id="@+id/callBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@android:color/holo_green_dark"
+            android:src="@drawable/ic_call"/>
 
     </LinearLayout>
 
