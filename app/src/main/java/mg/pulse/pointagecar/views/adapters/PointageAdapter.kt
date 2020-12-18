@@ -30,7 +30,6 @@ class PointageAdapter(val itemClickListener: ItemClickListener) : RecyclerView.A
     }
 }
 
-
 class PointageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private var matriculeTv: TextView = itemView.findViewById(R.id.matriculeTv)

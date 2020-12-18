@@ -1,13 +1,9 @@
 package mg.pulse.pointagecar.remote
 
-import androidx.lifecycle.LiveData
-import mg.pulse.pointagecar.models.entities.Collaborateur
 import mg.pulse.pointagecar.models.entities.Ramassage
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -30,13 +26,11 @@ interface PointageAPI {
         }
     }
 
-    @GET("api/collaborateur")
-    suspend fun getCollaborateurs(): List<Collaborateur>
-
-    @GET("api/ramassage")
-    suspend fun getRamassages(): List<Ramassage>
-
     @GET("api/ramassage/dateandcar")
     suspend fun getRamassagesByDateAndCar(@Query("idcar") idCar:String, @Query("date") date:String): List<Ramassage>
+
+
+    @GET("api/livraison/dateandcar")
+    suspend fun getLivraisonsByDateAndCar(@Query("idcar") idCar:String, @Query("date") date:String): List<Ramassage>
 
 }

@@ -7,12 +7,12 @@ import okhttp3.MediaType
 import okhttp3.ResponseBody
 import okio.BufferedSource
 
-data class Ramassage(
+open class Ramassage(
     @SerializedName("id") @Expose val id: String,
     @SerializedName("collaborateur") @Expose var collaborateur: Collaborateur,
     @SerializedName("car") @Expose var car: Car,
-    @SerializedName("dateramassage") @Expose var dateRamassage: String,
-    @SerializedName("heureramassage") @Expose var heureRamassage: String,
+    @SerializedName(value="dateramassage", alternate= arrayOf("datelivraison")) @Expose var dateRamassage: String,
+    @SerializedName(value="heureramassage", alternate= arrayOf("heurelivraison")) @Expose var heureRamassage: String,
     @SerializedName("deleted") @Expose var deleted: Boolean
 ) : ResponseBody() {
 

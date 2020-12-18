@@ -35,9 +35,6 @@
             android:name=".views.activities.NfcActivity"
             android:label="@string/title_activity_nfc"
             android:theme="@style/Theme.PointageCar.NoActionBar" />
-        <activity
-            android:name=".views.activities.PointageActivity"
-            android:theme="@style/Theme.PointageCar.NoActionBar" />
     </application>
 
 </manifest>

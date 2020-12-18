@@ -25,10 +25,14 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         toolbarTitle?.text = title
     }
 
-    protected fun configToolbar(title: String) {
+    protected fun configToolbar(title: String? = "") {
         toolbar = findViewById(R.id.custom_toolbar)
         setSupportActionBar(toolbar)
         toolbarTitle = toolbar.findViewById(R.id.toolbar_title)
+        toolbarTitle?.text = title
+    }
+
+    protected fun setToolbarTitle(title:String){
         toolbarTitle?.text = title
     }
 

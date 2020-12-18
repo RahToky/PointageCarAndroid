@@ -7,6 +7,17 @@ import android.net.NetworkCapabilities
 
 class App: Application() {
 
+    companion object Factory{
+        private var singleton: App? = null
+        fun getInstance(): App? {
+            return singleton
+        }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        singleton = this
+    }
 
      fun isNetworkConnected(): Boolean {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -15,5 +26,4 @@ class App: Application() {
         return networkCapabilities != null &&
                 networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
-
 }
