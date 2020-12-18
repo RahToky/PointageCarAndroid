@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.NFC" />
+
     <uses-feature android:name="android.hardware.nfc" />
 
     <application
@@ -19,7 +20,7 @@
         <activity
             android:name=".views.activities.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.PointageCar.NoActionBar"/>
+            android:theme="@style/Theme.PointageCar.NoActionBar" />
         <activity
             android:name=".views.activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -36,5 +37,4 @@
             android:label="@string/title_activity_nfc"
             android:theme="@style/Theme.PointageCar.NoActionBar" />
     </application>
-
 </manifest>
