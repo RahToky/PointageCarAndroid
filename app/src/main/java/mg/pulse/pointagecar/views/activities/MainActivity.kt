@@ -3,7 +3,6 @@ package mg.pulse.pointagecar.views.activities
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
 import android.nfc.NfcManager
@@ -22,16 +21,16 @@ import mg.pulse.pointagecar.views.fragments.PointageListFragment
 
 class MainActivity : BaseActivity() {
 
-    private var ramassageListFragment:PointageListFragment ? = null
-    private var livraisonListFragment:PointageListFragment ? = null
+    private var ramassageListFragment: PointageListFragment? = null
+    private var livraisonListFragment: PointageListFragment? = null
 
     //NFC
-    private var nfcAdapter:NfcAdapter? = null
+    private var nfcAdapter: NfcAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        configToolbar("Main")
+        configToolbar(getString(R.string.app_name))
         configureDrawerLayout()
         configureNavigationView()
         showFirstFragment()
@@ -66,6 +65,7 @@ class MainActivity : BaseActivity() {
             FragmentTag.RAMASSAGE -> showRamassageListFragment()
             FragmentTag.LIVRAISON -> showLivraisonListFragement()
             else -> {
+                showFirstFragment()
             }
         }
     }
@@ -105,7 +105,6 @@ class MainActivity : BaseActivity() {
     }
 
 
-
     /* =========================================== *\
                         FOR NFC
     \*=============================================*/
@@ -118,7 +117,12 @@ class MainActivity : BaseActivity() {
         try {
             val intent = Intent(this, javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             val nfcPendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-            nfcAdapter?.enableForegroundDispatch(this, nfcPendingIntent, null, null)
+            nfcAdapter?.enableForegroundDispatch(
+                this,
+                nfcPendingIntent,
+                NfcUtils.getIntentFilters(),
+                null
+            )
         } catch (ex: IllegalStateException) {
             Log.e("MyTag", "Error enabling NFC foreground dispatch", ex)
         }
@@ -132,44 +136,29 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    fun getIntentFilters(): Array<IntentFilter> {
-        val ndefFilter = IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED)
-        try {
-            ndefFilter.addDataType("application/vnd.com.tickets")
-        } catch (e: IntentFilter.MalformedMimeTypeException) {
-            Log.e("NfcUtils", "Problem in parsing mime type for nfc reading", e)
-        }
-
-        return arrayOf(ndefFilter)
-    }
-
-    fun getData(rawMsgs: Array<Parcelable>): String {
-        val msgs = arrayOfNulls<NdefMessage>(rawMsgs.size)
-        for (i in rawMsgs.indices) {
-            msgs[i] = rawMsgs[i] as NdefMessage
-        }
-
-        val records = msgs[0]!!.records
-
-        var recordData = ""
-
-        for (record in records) {
-            recordData += record.toString() + "\n"
-        }
-
-        return recordData
-    }
-
     private fun onTagTapped(superTagId: String, superTagData: String) {
-        Toast.makeText(this,"superTagId=$superTagId \nsuperTagData=$superTagData",Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this,
+            "superTagId=$superTagId \nsuperTagData=$superTagData",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         if (NfcAdapter.ACTION_NDEF_DISCOVERED == intent.action) {
-            val rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
+            val rawMsgs:Array<Parcelable> = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES) as Array<Parcelable>
             if (rawMsgs != null) {
-                onTagTapped(NfcUtils.getUID(intent), NfcUtils.getData(rawMsgs))
+                val messages:Array<NdefMessage?> = arrayOfNulls<NdefMessage>(rawMsgs.size)
+                var data = ""
+                for (i in rawMsgs.indices) {
+                    messages[i] = rawMsgs[i] as NdefMessage
+                    val records = messages[i]!!.records
+                    for(record in records)
+                        data += "\n"+NfcUtils.getPaylodText(record)+"\n"
+                }
+                Log.i("from tag: ", data)
+                Toast.makeText(this, data, Toast.LENGTH_LONG).show()
             }
         }
     }

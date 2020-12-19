@@ -10,6 +10,7 @@ import android.nfc.Tag
 import android.os.Parcelable
 import android.util.Log
 import com.google.common.io.BaseEncoding
+import kotlin.experimental.and
 
 class NfcUtils {
     companion object {
@@ -40,7 +41,7 @@ class NfcUtils {
         fun getIntentFilters(): Array<IntentFilter> {
             val ndefFilter = IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED)
             try {
-                ndefFilter.addDataType("application/vnd.com.tickets")
+                ndefFilter.addDataType("text/plain")
             } catch (e: IntentFilter.MalformedMimeTypeException) {
                 Log.e("NfcUtils", "Problem in parsing mime type for nfc reading", e)
             }
@@ -56,6 +57,24 @@ class NfcUtils {
             val record2 = NdefRecord.createApplicationRecord(context.packageName)
             message = NdefMessage(arrayOf(record1, record2))
             return message
+        }
+
+        fun getPaylodText(record: NdefRecord): String {
+            val payload: ByteArray = record.payload
+
+            val textEncoding = if (payload[0] and 128.toByte() == 0.toByte()) "UTF-8" else "UTF-16"
+
+            //Get the Language Code
+            val languageCodeLength: Int = (payload[0] and 52.toByte()).toInt()
+            //val languageCode = String(payload, 1, languageCodeLength, charset("US-ASCII"))
+
+            //Get the Text
+            return String(
+                payload,
+                languageCodeLength,
+                payload.size - languageCodeLength,
+                charset(textEncoding)
+            )
         }
     }
 }

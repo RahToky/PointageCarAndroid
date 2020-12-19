@@ -10,6 +10,7 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="veuillez_rapprocher_votre_badge">Veuillez rapprocher votre badge</string>
+    <string name="connection_not_available">Aucun connexion internet</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="ramassage">Ramassage</string>
     <string name="livraison">Livraison</string>

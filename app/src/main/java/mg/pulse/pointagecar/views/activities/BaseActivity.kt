@@ -3,6 +3,7 @@ package mg.pulse.pointagecar.views.activities
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -60,4 +61,6 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         TODO("Not yet implemented")
     }
 
+    protected open fun toastShortError(message:String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    protected open fun toastLongError(message:String) = Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }

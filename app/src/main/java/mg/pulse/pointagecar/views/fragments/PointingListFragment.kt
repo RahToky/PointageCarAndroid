@@ -1,5 +1,6 @@
 package mg.pulse.pointagecar.views.fragments
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +18,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import mg.pulse.pointagecar.App
 import mg.pulse.pointagecar.R
 import mg.pulse.pointagecar.models.entities.Pointing
+import mg.pulse.pointagecar.models.utils.isNetworkConnected
 import mg.pulse.pointagecar.models.utils.toStringLeadingZero
+import mg.pulse.pointagecar.models.utils.toastNetworkNotConnected
 import mg.pulse.pointagecar.viewmodels.PointingViewModel
 import mg.pulse.pointagecar.views.PointageAdapter
 import mg.pulse.pointagecar.views.callbacks.ItemClickListener
@@ -51,7 +55,13 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
         initListeners()
         var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
         dateRamassageTv.text = simpleDateFormat.format(Date())
-        initPointageList()
+
+        if (isNetworkConnected(activity as Activity))
+            initPointingList()
+        else
+            toastNetworkNotConnected(activity as Activity)
+
+        handleViewModelsError()
         return rootView
     }
 
@@ -62,7 +72,7 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
 
     private fun initListeners(){
         swipeRefreshLayout.setOnRefreshListener{
-            initPointageList()
+            initPointingList()
         }
 
         calendarLayout.setOnClickListener {
@@ -74,14 +84,14 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
             val dpd = DatePickerDialog(
                 mContext,{ _, year, monthOfYear, dayOfMonth ->
                     dateRamassageTv.text = "$year-${ toStringLeadingZero(monthOfYear + 1)}-${toStringLeadingZero(dayOfMonth)}"
-                    initPointageList()
+                    initPointingList()
                 },year,month,day
             )
             dpd.show()
         }
     }
 
-    private fun initPointageList(){
+    private fun initPointingList(){
         swipeRefreshLayout.isRefreshing = true
         if(fragmentTag == FragmentTag.RAMASSAGE)
             getRamassageList()
@@ -102,7 +112,7 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
 
     private fun getRamassageList() {
         pointageViewModel.initRamassageList(CAR_ID, dateRamassageTv.text.toString())
-        pointageViewModel.getRamassages().observe(lifeCycleOwner, androidx.lifecycle.Observer {
+        pointageViewModel.pickupPointingList.observe(lifeCycleOwner, {
             pointageAdapter.updateList(it)
             ramassageSizeTv.text = it.size.toString()
             swipeRefreshLayout.isRefreshing = false
@@ -111,10 +121,17 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
 
     private fun getLivraisonList(){
         pointageViewModel.initLivraisonList(CAR_ID, dateRamassageTv.text.toString())
-        pointageViewModel.getLivraisons().observe(lifeCycleOwner, androidx.lifecycle.Observer {
+        pointageViewModel.deliveryPointingList.observe(lifeCycleOwner, {
             pointageAdapter.updateList(it)
             ramassageSizeTv.text = it.size.toString()
             swipeRefreshLayout.isRefreshing = false
+        })
+    }
+
+    private fun handleViewModelsError(){
+        pointageViewModel.errorMessage?.observe(lifeCycleOwner,{
+            swipeRefreshLayout.isRefreshing = false
+            Toast.makeText(activity,it,Toast.LENGTH_LONG).show()
         })
     }
 

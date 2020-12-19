@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import mg.pulse.pointagecar.models.entities.Pointing
 import mg.pulse.pointagecar.remote.services.PointingAPIService
+import java.lang.Exception
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,54 +19,35 @@ class PointingViewModel: ViewModel() {
     private val simpleDateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
 
     private var datePointage:String = simpleDateFormat.format(Date())
-    private var ramassageList: MutableLiveData<List<Pointing>> = MutableLiveData<List<Pointing>>()
-    private var livraisonList: MutableLiveData<List<Pointing>> = MutableLiveData<List<Pointing>>()
-    var connectionTentativeCount:Int = 3
+    var pickupPointingList: MutableLiveData<List<Pointing>> = MutableLiveData<List<Pointing>>()
+    var deliveryPointingList: MutableLiveData<List<Pointing>> = MutableLiveData<List<Pointing>>()
+    var errorMessage:MutableLiveData<String> = MutableLiveData()
 
-    fun initAPI(idCar:String, dateRamassage: String?){
-        if(dateRamassage != null)
-            this.datePointage = dateRamassage
-        this.datePointage = dateRamassage!!
-        initRamassageList(idCar,dateRamassage)
-        initLivraisonList(idCar,dateRamassage)
-    }
-
+    @Throws(Exception::class)
     fun initRamassageList(idCar:String, dateRamassage: String?){
         if(dateRamassage != null)
             this.datePointage = dateRamassage
         val errorHandler = CoroutineExceptionHandler { _, exception ->
-            Log.i("MyTag","Exception === ${exception.message}")
-            if(exception.message?.compareTo("timeout",true) == 0){
-                if(connectionTentativeCount>0) {
-                    initLivraisonList(idCar, this.datePointage)
-                    connectionTentativeCount --
-                }
-            }
+            Log.i("MyTag","initRamassageList Exception === ${exception.message}")
+            errorMessage.value = exception.message
         }
         coroutineScope.launch(errorHandler){
-            ramassageList.value = pointageAPIRepository.getRamassagesByDate(idCar,datePointage)
+            pickupPointingList.value = pointageAPIRepository.getRamassagesByDate(idCar,datePointage)
         }
     }
 
+    @Throws(Exception::class)
     fun initLivraisonList(idCar:String, dateLivraison: String?){
         if(dateLivraison != null)
             this.datePointage = dateLivraison
         val errorHandler = CoroutineExceptionHandler { _, exception ->
-            Log.i("MyTag","Exception === ${exception.message}")
-            if(exception.message?.compareTo("timeout",true) == 0){
-                if(connectionTentativeCount>0) {
-                    initLivraisonList(idCar, dateLivraison)
-                    connectionTentativeCount --
-                }
-            }
+            Log.i("MyTag","initLivraisonList Exception === ${exception.message}")
+            errorMessage.value = exception.message
         }
         coroutineScope.launch(errorHandler){
-            livraisonList.value = pointageAPIRepository.getLivraisonByDate(idCar,datePointage)
+            deliveryPointingList.value = pointageAPIRepository.getLivraisonByDate(idCar,datePointage)
         }
     }
-
-    fun getRamassages() = ramassageList
-    fun getLivraisons() = livraisonList
 
     override fun onCleared() {
         super.onCleared()
