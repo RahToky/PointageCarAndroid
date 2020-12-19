@@ -9,8 +9,7 @@ import okio.BufferedSource
 class Car(
     @SerializedName("id") @Expose var id: String,
     @SerializedName("immatriculation") @Expose var immatriculation: String,
-    @SerializedName("chauffeur") @Expose var chauffeur: Chauffeur,
-    @SerializedName("deleted") @Expose var isDeleted: Boolean
+    @SerializedName("chauffeur") @Expose var chauffeur: User
 ) : ResponseBody() {
 
     override fun contentLength(): Long = contentLength()

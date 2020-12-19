@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import mg.pulse.pointagecar.App
 import mg.pulse.pointagecar.R
-import mg.pulse.pointagecar.models.entities.Ramassage
+import mg.pulse.pointagecar.models.entities.Pointing
 import mg.pulse.pointagecar.models.utils.toStringLeadingZero
-import mg.pulse.pointagecar.viewmodels.PointageViewModel
+import mg.pulse.pointagecar.viewmodels.PointingViewModel
 import mg.pulse.pointagecar.views.PointageAdapter
 import mg.pulse.pointagecar.views.callbacks.ItemClickListener
-import mg.pulse.pointagecar.views.dialogs.PointageDetailDialog
+import mg.pulse.pointagecar.views.dialogs.PointingDetailDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,11 +29,11 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
     private val CAR_ID: String = "1"
     private lateinit var recyclerView: RecyclerView
     private lateinit var pointageAdapter: PointageAdapter
-    private val pointageViewModel: PointageViewModel = PointageViewModel()
+    private val pointageViewModel: PointingViewModel = PointingViewModel()
     private lateinit var ramassageSizeTv: TextView
     private lateinit var dateRamassageTv: TextView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private var pointageDetailDialog: PointageDetailDialog = PointageDetailDialog()
+    private var pointageDetailDialog: PointingDetailDialog = PointingDetailDialog()
     private lateinit var calendarLayout: LinearLayout
     private lateinit var mContext:Context
 
@@ -119,8 +119,8 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
     }
 
     override fun onClick(item: Any) {
-        var ramassage: Ramassage = item as Ramassage
-        pointageDetailDialog.setCollaborateur(ramassage.collaborateur)
+        var ramassage: Pointing = item as Pointing
+        pointageDetailDialog.setCollaborateur(ramassage.collaborater)
         pointageDetailDialog.show(activity?.supportFragmentManager!!, null)
     }
 

@@ -11,10 +11,10 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import mg.pulse.pointagecar.R
-import mg.pulse.pointagecar.models.entities.Collaborateur
+import mg.pulse.pointagecar.models.entities.User
 import mg.pulse.pointagecar.models.utils.formatPhoneNumberMG
 
-class PointageDetailDialog : DialogFragment() {
+class PointingDetailDialog : DialogFragment() {
 
     private var matriculeTv: TextView? = null
     private var nomTv: TextView? = null
@@ -23,7 +23,7 @@ class PointageDetailDialog : DialogFragment() {
     private var smsBtn:ImageButton? = null
     private var callBtn:ImageButton? = null
 
-    private var collaborateur: Collaborateur? = null
+    private var collaborateur: User? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,22 +52,22 @@ class PointageDetailDialog : DialogFragment() {
 
     private fun displayCollaborateur(){
         matriculeTv?.text = collaborateur?.matricule
-        nomTv?.text = collaborateur?.nom
-        prenomTv?.text = collaborateur?.prenom
-        telephoneTv?.text = formatPhoneNumberMG(collaborateur?.telephone)
+        nomTv?.text = collaborateur?.lastName
+        prenomTv?.text = collaborateur?.firstName
+        telephoneTv?.text = formatPhoneNumberMG(collaborateur?.phoneNumber)
     }
 
     private fun initListeners(view: View){
         callBtn?.setOnClickListener {
             var intent: Intent = Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:${collaborateur?.telephone}"))
+            intent.setData(Uri.parse("tel:${collaborateur?.phoneNumber}"))
             startActivity(intent);
         }
 
         smsBtn?.setOnClickListener {
-            val uri = Uri.parse("smsto:${collaborateur?.telephone}")
+            val uri = Uri.parse("smsto:${collaborateur?.phoneNumber}")
             val intent = Intent(Intent.ACTION_SENDTO, uri)
-            intent.putExtra("sms_body", "Bonjour ${collaborateur?.nom},\n")
+            intent.putExtra("sms_body", "Bonjour ${collaborateur?.lastName},\n")
             startActivity(intent)
         }
     }
@@ -81,7 +81,7 @@ class PointageDetailDialog : DialogFragment() {
         callBtn = view.findViewById(R.id.callBtn)
     }
 
-    fun setCollaborateur(collaborateur: Collaborateur){
+    fun setCollaborateur(collaborateur: User){
         this.collaborateur = collaborateur
     }
 

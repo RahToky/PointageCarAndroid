@@ -1,6 +1,6 @@
 package mg.pulse.pointagecar.remote
 
-import mg.pulse.pointagecar.models.entities.Ramassage
+import mg.pulse.pointagecar.models.entities.Pointing
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -26,11 +26,11 @@ interface PointageAPI {
         }
     }
 
-    @GET("api/ramassage/dateandcar")
-    suspend fun getRamassagesByDateAndCar(@Query("idcar") idCar:String, @Query("date") date:String): List<Ramassage>
+    @GET("api/pickup-pointing/dateandcar")
+    suspend fun getRamassagesByDateAndCar(@Query("idcar") idCar:String, @Query("date") date:String): List<Pointing>
 
 
-    @GET("api/livraison/dateandcar")
-    suspend fun getLivraisonsByDateAndCar(@Query("idcar") idCar:String, @Query("date") date:String): List<Ramassage>
+    @GET("api/delivery-pointing/dateandcar")
+    suspend fun getLivraisonsByDateAndCar(@Query("idcar") idCar:String, @Query("date") date:String): List<Pointing>
 
 }

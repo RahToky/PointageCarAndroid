@@ -7,12 +7,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import mg.pulse.pointagecar.R
-import mg.pulse.pointagecar.models.entities.Ramassage
+import mg.pulse.pointagecar.models.entities.Pointing
 import mg.pulse.pointagecar.views.callbacks.ItemClickListener
 
 class PointageAdapter(val itemClickListener: ItemClickListener) : RecyclerView.Adapter<PointageViewHolder>() {
 
-    private var ramassageList: List<Ramassage> = listOf()
+    private var ramassageList: List<Pointing> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PointageViewHolder =
         PointageViewHolder(
@@ -24,7 +24,7 @@ class PointageAdapter(val itemClickListener: ItemClickListener) : RecyclerView.A
 
     override fun getItemCount(): Int = ramassageList.size
 
-    fun updateList(list: List<Ramassage>) {
+    fun updateList(list: List<Pointing>) {
         ramassageList = list
         notifyDataSetChanged()
     }
@@ -37,10 +37,10 @@ class PointageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private var checkHourTv: TextView = itemView.findViewById(R.id.collaboCheckHourTv)
     private val itemLayout: LinearLayout = itemView.findViewById(R.id.itemLayout)
 
-    fun setItem(ramassage: Ramassage, itemClickListener:ItemClickListener) {
-        matriculeTv.text = ramassage.collaborateur.matricule
-        fullNameTv.text = ramassage.collaborateur.fullName
-        checkHourTv.text = ramassage.heureRamassage.subSequence(0, 5)
+    fun setItem(ramassage: Pointing, itemClickListener:ItemClickListener) {
+        matriculeTv.text = ramassage.collaborater.matricule
+        fullNameTv.text = ramassage.collaborater.fullName
+        checkHourTv.text = ramassage.pointingHour.subSequence(0, 5)
         itemLayout.setOnClickListener(View.OnClickListener {
             itemClickListener.onClick(ramassage)
         })

@@ -1,19 +1,17 @@
 package mg.pulse.pointagecar.models.entities
 
-import android.text.BoringLayout
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import okio.BufferedSource
 
-open class Ramassage(
+open class Pointing(
     @SerializedName("id") @Expose val id: String,
-    @SerializedName("collaborateur") @Expose var collaborateur: Collaborateur,
+    @SerializedName("user") @Expose var collaborater: User,
     @SerializedName("car") @Expose var car: Car,
-    @SerializedName(value="dateramassage", alternate= arrayOf("datelivraison")) @Expose var dateRamassage: String,
-    @SerializedName(value="heureramassage", alternate= arrayOf("heurelivraison")) @Expose var heureRamassage: String,
-    @SerializedName("deleted") @Expose var deleted: Boolean
+    @SerializedName(value="pickupdate", alternate= arrayOf("deliverydate")) @Expose var pointingDate: String,
+    @SerializedName(value="pickuphour", alternate= arrayOf("deliveryhour")) @Expose var pointingHour: String
 ) : ResponseBody() {
 
     override fun contentLength(): Long = contentLength()

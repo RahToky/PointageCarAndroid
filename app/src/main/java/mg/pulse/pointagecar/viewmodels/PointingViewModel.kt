@@ -4,22 +4,22 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
-import mg.pulse.pointagecar.models.entities.Ramassage
-import mg.pulse.pointagecar.remote.services.PointageAPIService
+import mg.pulse.pointagecar.models.entities.Pointing
+import mg.pulse.pointagecar.remote.services.PointingAPIService
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PointageViewModel: ViewModel() {
+class PointingViewModel: ViewModel() {
 
     private val parentJob = SupervisorJob()
     private val coroutineScope = CoroutineScope(parentJob + Dispatchers.Main)
-    private val pointageAPIRepository: PointageAPIService = PointageAPIService()
+    private val pointageAPIRepository: PointingAPIService = PointingAPIService()
     private val simpleDateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
 
     private var datePointage:String = simpleDateFormat.format(Date())
-    private var ramassageList: MutableLiveData<List<Ramassage>> = MutableLiveData<List<Ramassage>>()
-    private var livraisonList: MutableLiveData<List<Ramassage>> = MutableLiveData<List<Ramassage>>()
+    private var ramassageList: MutableLiveData<List<Pointing>> = MutableLiveData<List<Pointing>>()
+    private var livraisonList: MutableLiveData<List<Pointing>> = MutableLiveData<List<Pointing>>()
     var connectionTentativeCount:Int = 3
 
     fun initAPI(idCar:String, dateRamassage: String?){
