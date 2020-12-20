@@ -32,7 +32,7 @@ class PointingViewModel: ViewModel() {
             errorMessage.value = exception.message
         }
         coroutineScope.launch(errorHandler){
-            pickupPointingList.value = pointageAPIRepository.getRamassagesByDate(idCar,datePointage)
+            pickupPointingList.value = pointageAPIRepository.findRamassagesByDateAndCar(idCar,datePointage)
         }
     }
 
@@ -45,7 +45,7 @@ class PointingViewModel: ViewModel() {
             errorMessage.value = exception.message
         }
         coroutineScope.launch(errorHandler){
-            deliveryPointingList.value = pointageAPIRepository.getLivraisonByDate(idCar,datePointage)
+            deliveryPointingList.value = pointageAPIRepository.findLivraisonsByDateAndCar(idCar,datePointage)
         }
     }
 
