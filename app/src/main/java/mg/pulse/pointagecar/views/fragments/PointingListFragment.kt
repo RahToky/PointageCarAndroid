@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -108,6 +109,7 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
         pointageAdapter = PointageAdapter(this)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = this.pointageAdapter
+        recyclerView.addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
     }
 
     private fun getRamassageList() {

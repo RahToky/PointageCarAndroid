@@ -13,12 +13,14 @@
     android:weightSum="10">
 
     <ImageView
+        android:id="@+id/profilImageView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
+        android:foreground="@drawable/rounded_profil"
         android:padding="8dp"
         android:src="@drawable/ic_account_circle"
-        app:tint="@color/red" />
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="0dp"

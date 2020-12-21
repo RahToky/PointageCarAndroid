@@ -179,7 +179,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Log.i("MyTag","drvier name is ${it.fullName}")
             driverFirstNameTv?.text = it.firstName
             driverLastNameTv?.text =  it.lastName
-            okPointingDialog.show(supportFragmentManager,"OkPointing")
         })
     }
 
