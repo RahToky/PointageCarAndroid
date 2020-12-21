@@ -15,4 +15,24 @@
         app:tint="@color/white"
         app:srcCompat="@drawable/ic_account_circle" />
 
+    <TextView
+        android:id="@+id/drawerDriverFirstNameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/drawerDriverLastNameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/drawerCarImmatriculationTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
+
 </LinearLayout>

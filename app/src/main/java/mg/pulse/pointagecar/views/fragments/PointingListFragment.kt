@@ -50,7 +50,7 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView: View = inflater.inflate(R.layout.fragment_pointage_list, container, false);
+        val rootView: View = inflater.inflate(R.layout.fragment_pointing_list, container, false);
         initViews(rootView)
         initListeners()
         var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")

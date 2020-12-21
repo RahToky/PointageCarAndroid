@@ -10,21 +10,40 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.google.android.material.navigation.NavigationView
 import mg.pulse.pointagecar.R
 import mg.pulse.pointagecar.models.utils.NfcUtils
+import mg.pulse.pointagecar.viewmodels.MainViewModel
+import mg.pulse.pointagecar.views.dialogs.OkPointingDialog
 import mg.pulse.pointagecar.views.fragments.FragmentTag
 import mg.pulse.pointagecar.views.fragments.PointageListFragment
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private val DRIVER_MATRICULE:String = "IT0001"
+
+    private var mainViewModel:MainViewModel =  MainViewModel()
+
+    protected lateinit var toolbar: Toolbar
+    protected var toolbarTitle: TextView? = null
+    protected var drawerLayout: DrawerLayout? = null
+    protected var navigationView: NavigationView? = null
+    private var driverFirstNameTv:TextView? = null
+    private var driverLastNameTv:TextView? = null
+    private var carImmatriculationTv:TextView? = null
     private var ramassageListFragment: PointageListFragment? = null
     private var livraisonListFragment: PointageListFragment? = null
+    private val okPointingDialog: OkPointingDialog = OkPointingDialog()
 
-    //NFC
     private var nfcAdapter: NfcAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +54,7 @@ class MainActivity : BaseActivity() {
         configureNavigationView()
         showFirstFragment()
         initNfcAdapter()
+        displayDriver()
     }
 
     override fun onResume() {
@@ -45,6 +65,49 @@ class MainActivity : BaseActivity() {
     override fun onPause() {
         disableNfcForegroundDispatch()
         super.onPause()
+    }
+
+
+    /* =========================================== *\
+                       TOOLBAR
+    \*=============================================*/
+
+    protected fun configToolbar(res:Int, title: String) {
+        toolbar = findViewById(res)
+        setSupportActionBar(toolbar)
+        toolbarTitle = toolbar.findViewById(R.id.toolbar_title)
+        toolbarTitle?.text = title
+    }
+
+    protected fun configToolbar(title: String? = "") = configToolbar(R.id.custom_toolbar,title!!)
+    protected fun setToolbarTitle(title:String) {toolbarTitle?.text = title}
+
+
+
+    /* =========================================== *\
+                    NAVIGATION DRAWER
+    \*=============================================*/
+
+    protected open fun configureDrawerLayout() {
+        drawerLayout = findViewById(R.id.activity_main_drawer_layout)
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        drawerLayout?.addDrawerListener(toggle)
+        toggle.syncState()
+    }
+
+    protected open fun configureNavigationView() {
+        navigationView = findViewById(R.id.activity_main_nav_view)
+        navigationView?.setNavigationItemSelectedListener(this)
+
+        driverFirstNameTv = findViewById(R.id.drawerDriverFirstNameTv)
+        driverLastNameTv = findViewById(R.id.drawerDriverLastNameTv)
+        carImmatriculationTv = findViewById(R.id.drawerCarImmatriculationTv)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -59,6 +122,12 @@ class MainActivity : BaseActivity() {
         drawerLayout?.closeDrawer(GravityCompat.START)
         return true
     }
+
+
+
+    /* =========================================== *\
+                       FRAGMENTS
+    \*=============================================*/
 
     private fun showFragment(fragmentTag: FragmentTag) {
         when (fragmentTag) {
@@ -104,6 +173,17 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    private fun displayDriver(){
+        mainViewModel.initCollaboraterByMatricule(DRIVER_MATRICULE)
+        mainViewModel.collaborater.observe(this,{
+            Log.i("MyTag","drvier name is ${it.fullName}")
+            driverFirstNameTv?.text = it.firstName
+            driverLastNameTv?.text =  it.lastName
+            okPointingDialog.show(supportFragmentManager,"OkPointing")
+        })
+    }
+
+
 
     /* =========================================== *\
                         FOR NFC
@@ -134,14 +214,6 @@ class MainActivity : BaseActivity() {
         } catch (ex: IllegalStateException) {
             Log.e("MyTag", "Error disabling NFC foreground dispatch", ex)
         }
-    }
-
-    private fun onTagTapped(superTagId: String, superTagData: String) {
-        Toast.makeText(
-            this,
-            "superTagId=$superTagId \nsuperTagData=$superTagData",
-            Toast.LENGTH_SHORT
-        ).show()
     }
 
     override fun onNewIntent(intent: Intent) {

@@ -16,7 +16,7 @@ class PointageAdapter(val itemClickListener: ItemClickListener) : RecyclerView.A
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PointageViewHolder =
         PointageViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_pointage, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_pointing, parent, false)
         )
 
     override fun onBindViewHolder(holder: PointageViewHolder, position: Int) =

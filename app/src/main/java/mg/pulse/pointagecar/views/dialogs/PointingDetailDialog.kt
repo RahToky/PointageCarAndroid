@@ -30,7 +30,7 @@ class PointingDetailDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView: View = inflater.inflate(R.layout.dialog_pointage_detail, container, false);
+        val rootView: View = inflater.inflate(R.layout.dialog_pointing_detail, container, false);
         initViews(rootView)
         initListeners(rootView)
         if(collaborateur != null){

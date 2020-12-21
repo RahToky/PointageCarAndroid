@@ -10,12 +10,11 @@
             android:title="Fil d'actualité" />
     </group>
     -->
-    <item android:title="Pointage">
+    <item android:title="@string/app_name">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/ramassageMenu"
-                    android:checked="true"
                     android:checkable="true"
                     android:icon="@drawable/ic_bus_ramassage"
                     android:title="Ramassage" />

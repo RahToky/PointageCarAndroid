@@ -19,6 +19,10 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     protected var drawerLayout: DrawerLayout? = null
     protected var navigationView: NavigationView? = null
 
+    private var driverFirstNameTv:TextView? = null
+    private var driverLastNameTv:TextView? = null
+    private var carImmatriculationTv:TextView? = null
+
     protected fun configToolbar(res:Int, title: String) {
         toolbar = findViewById(res)
         setSupportActionBar(toolbar)
@@ -26,16 +30,9 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         toolbarTitle?.text = title
     }
 
-    protected fun configToolbar(title: String? = "") {
-        toolbar = findViewById(R.id.custom_toolbar)
-        setSupportActionBar(toolbar)
-        toolbarTitle = toolbar.findViewById(R.id.toolbar_title)
-        toolbarTitle?.text = title
-    }
+    protected fun configToolbar(title: String? = "") = configToolbar(R.id.custom_toolbar,title!!)
 
-    protected fun setToolbarTitle(title:String){
-        toolbarTitle?.text = title
-    }
+    protected fun setToolbarTitle(title:String) {toolbarTitle?.text = title}
 
     protected open fun configureDrawerLayout() {
         drawerLayout = findViewById(R.id.activity_main_drawer_layout)
@@ -55,12 +52,14 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         navigationView = findViewById(R.id.activity_main_nav_view)
         navigationView = findViewById<View>(R.id.activity_main_nav_view) as NavigationView
         navigationView?.setNavigationItemSelectedListener(this)
+
+
+        driverFirstNameTv = findViewById(R.id.drawerDriverFirstNameTv)
+        driverLastNameTv = findViewById(R.id.drawerDriverLastNameTv)
+        carImmatriculationTv = findViewById(R.id.drawerCarImmatriculationTv)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         TODO("Not yet implemented")
     }
-
-    protected open fun toastShortError(message:String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    protected open fun toastLongError(message:String) = Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
