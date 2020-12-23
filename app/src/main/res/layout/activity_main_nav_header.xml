@@ -8,12 +8,14 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView"
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profilImageView"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        app:tint="@color/white"
-        app:srcCompat="@drawable/ic_account_circle" />
+        android:layout_marginTop="20dp"
+        android:src="@drawable/profil_b4"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/drawerDriverFirstNameTv"

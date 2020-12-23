@@ -73,4 +73,8 @@ dependencies {
 
     //NfcUtils
     implementation "com.google.guava:guava:19.0"
+
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+
 }
