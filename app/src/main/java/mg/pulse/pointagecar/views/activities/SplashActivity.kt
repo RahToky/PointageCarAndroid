@@ -8,11 +8,6 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import mg.pulse.pointagecar.R
 
-
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 class SplashActivity : AppCompatActivity() {
 
     private val SPLASH_DISPLAY_LENGTH:Long = 1000;
@@ -31,9 +26,9 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed({
-            val mainIntent = Intent(this, MainActivity::class.java)
-            this@SplashActivity.startActivity(mainIntent)
-            this@SplashActivity.finish()
+            val mainIntent = Intent(this, LoginActivity::class.java)
+            startActivity(mainIntent)
+            finish()
         }, SPLASH_DISPLAY_LENGTH)
     }
 

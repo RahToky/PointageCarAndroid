@@ -35,6 +35,7 @@
 
     </LinearLayout>
 
+
     <!-- 2 | NavigationView -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/activity_main_nav_view"
@@ -44,7 +45,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/activity_main_nav_header"
         app:menu="@menu/activity_main_menu_drawer"
-        app:itemIconTint="@color/drawer_menu_bg"
-        app:itemTextColor="@color/drawer_menu_bg"/>
+        app:itemIconTint="@color/menu_item_color_state"
+        app:itemTextColor="@color/menu_item_color_state"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

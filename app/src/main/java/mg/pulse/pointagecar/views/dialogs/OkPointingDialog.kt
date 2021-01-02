@@ -13,7 +13,7 @@ import java.util.*
 import kotlin.concurrent.schedule
 
 
-class OkPointingDialog(var displayTime: Long = 800) : DialogFragment() {
+class OkPointingDialog(var displayTime: Long = 1000) : DialogFragment() {
 
     private var okPointingLogo:ImageView? = null
 

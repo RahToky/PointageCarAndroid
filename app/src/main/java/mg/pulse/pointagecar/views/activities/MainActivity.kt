@@ -20,6 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import mg.pulse.pointagecar.R
+import mg.pulse.pointagecar.models.entities.Pointing
 import mg.pulse.pointagecar.models.utils.NfcUtils
 import mg.pulse.pointagecar.viewmodels.MainViewModel
 import mg.pulse.pointagecar.views.dialogs.OkPointingDialog
@@ -29,17 +30,17 @@ import mg.pulse.pointagecar.views.fragments.PointageListFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val DRIVER_MATRICULE:String = "IT0001"
+    private val DRIVER_MATRICULE: String = "IT0001"
 
-    private var mainViewModel:MainViewModel =  MainViewModel()
+    private var mainViewModel: MainViewModel = MainViewModel()
 
     protected lateinit var toolbar: Toolbar
     protected var toolbarTitle: TextView? = null
     protected var drawerLayout: DrawerLayout? = null
     protected var navigationView: NavigationView? = null
-    private var driverFirstNameTv:TextView? = null
-    private var driverLastNameTv:TextView? = null
-    private var carImmatriculationTv:TextView? = null
+    private var driverFirstNameTv: TextView? = null
+    private var driverLastNameTv: TextView? = null
+    private var carImmatriculationTv: TextView? = null
     private var ramassageListFragment: PointageListFragment? = null
     private var livraisonListFragment: PointageListFragment? = null
     private val okPointingDialog: OkPointingDialog = OkPointingDialog()
@@ -72,16 +73,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                        TOOLBAR
     \*=============================================*/
 
-    protected fun configToolbar(res:Int, title: String) {
+    protected fun configToolbar(res: Int, title: String) {
         toolbar = findViewById(res)
         setSupportActionBar(toolbar)
         toolbarTitle = toolbar.findViewById(R.id.toolbar_title)
         toolbarTitle?.text = title
     }
 
-    protected fun configToolbar(title: String? = "") = configToolbar(R.id.custom_toolbar,title!!)
-    protected fun setToolbarTitle(title:String) {toolbarTitle?.text = title}
-
+    protected fun configToolbar(title: String? = "") = configToolbar(R.id.custom_toolbar, title!!)
+    protected fun setToolbarTitle(title: String) {
+        toolbarTitle?.text = title
+    }
 
 
     /* =========================================== *\
@@ -122,7 +124,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout?.closeDrawer(GravityCompat.START)
         return true
     }
-
 
 
     /* =========================================== *\
@@ -173,15 +174,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun displayDriver(){
+    private fun displayDriver() {
         mainViewModel.initCollaboraterByMatricule(DRIVER_MATRICULE)
-        mainViewModel.collaborater.observe(this,{
-            Log.i("MyTag","drvier name is ${it.fullName}")
+        mainViewModel.collaborater.observe(this, {
+            Log.i("MyTag", "drvier name is ${it.fullName}")
             driverFirstNameTv?.text = it.firstName
-            driverLastNameTv?.text =  it.lastName
+            driverLastNameTv?.text = it.lastName
         })
     }
-
 
 
     /* =========================================== *\
@@ -215,21 +215,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    private fun displayOkPointingDialog() {
+        if (!okPointingDialog.isAdded)
+            okPointingDialog.show(supportFragmentManager, "checked")
+    }
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         if (NfcAdapter.ACTION_NDEF_DISCOVERED == intent.action) {
-            val rawMsgs:Array<Parcelable> = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES) as Array<Parcelable>
+            val rawMsgs: Array<Parcelable> =
+                intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES) as Array<Parcelable>
             if (rawMsgs != null) {
-                val messages:Array<NdefMessage?> = arrayOfNulls<NdefMessage>(rawMsgs.size)
+                val messages: Array<NdefMessage?> = arrayOfNulls<NdefMessage>(rawMsgs.size)
                 var data = ""
                 for (i in rawMsgs.indices) {
                     messages[i] = rawMsgs[i] as NdefMessage
                     val records = messages[i]!!.records
-                    for(record in records)
-                        data += "\n"+NfcUtils.getPaylodText(record)+"\n"
+                    for (record in records)
+                        data += "\n" + NfcUtils.getPaylodText(record) + "\n"
                 }
                 Log.i("from tag: ", data)
-                Toast.makeText(this, data, Toast.LENGTH_LONG).show()
+                //Toast.makeText(this, data, Toast.LENGTH_LONG).show
+                displayOkPointingDialog()
             }
         }
     }
