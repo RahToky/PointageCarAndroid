@@ -1,40 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@color/red"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:background="@color/red">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profilImageView"
-        android:layout_width="95dp"
-        android:layout_height="95dp"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/profil_b4"
-        android:scaleType="centerCrop" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="9"
+            android:gravity="bottom"
+            android:orientation="vertical">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profilImageView"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profil_b4" />
 
-    <TextView
-        android:id="@+id/drawerDriverFirstNameTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/drawerDriverFirstNameTv"
+                android:fontFamily="@font/roboto_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/firstname"
+                android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/drawerDriverLastNameTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/drawerDriverLastNameTv"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lastname"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/drawerCarImmatriculationTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textStyle="bold"/>
-
-</LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/drawerCarImmatriculationTv"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:gravity="bottom|right"
+            android:text="2\n2\n6\n6\n\nT\nB\nB"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</RelativeLayout>

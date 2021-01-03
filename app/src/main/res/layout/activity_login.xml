@@ -40,6 +40,7 @@
             android:drawableLeft="@drawable/ic_person"
             android:drawableTint="@color/white"
             android:drawablePadding="10dp"
+            android:fontFamily="@font/roboto_medium"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:paddingLeft="10dp"
@@ -52,6 +53,7 @@
             android:drawableLeft="@drawable/ic_lock"
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
+            android:fontFamily="@font/roboto_medium"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
@@ -61,10 +63,11 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/connection_btn"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/roboto_bold"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/white"
             android:text="CONNEXION"
             android:textColor="@color/red"
             android:textStyle="bold"

@@ -22,4 +22,9 @@
     <!-- Used in NavigationDrawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="firstname">Prénoms(s)</string>
+    <string name="lastname">Nom</string>
+    <string name="deconnection">DECONNEXION</string>
+    <string name="ramassage_caps">RAMASSAGE</string>
+    <string name="livraison_caps">LIVRAISON</string>
 </resources>
