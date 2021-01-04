@@ -2,6 +2,8 @@ package mg.pulse.pointagecar.remote
 
 import mg.pulse.pointagecar.models.entities.Pointing
 import mg.pulse.pointagecar.models.entities.User
+import mg.pulse.pointagecar.remote.models.AuthRequest
+import mg.pulse.pointagecar.remote.models.AuthResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -30,6 +32,9 @@ interface PointageAPI {
     }
 
     // POINTINGS
+
+    @POST("auth/signin")
+    suspend fun authentificate(@Body auth:AuthRequest):AuthResponse?
 
     @GET("api/pickup-pointing/dateandcar")
     suspend fun findRamassagesByDateAndCar(@Query("idcar") idCar:String, @Query("date") date:String): List<Pointing>
