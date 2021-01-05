@@ -17,7 +17,7 @@ class AuthViewModel:BaseViewModel() {
     fun authentificate(login:String, pass:String){
         auth = AuthRequest(login,pass)
         val errorHandler = CoroutineExceptionHandler { _, exception ->
-            Log.i("MyTag","initCollaboraterByMatricule Exception === ${exception.message}")
+            Log.i("MyTag","initCollaboraterByMatricule Exception === ${exception}")
             errorMessage.value = exception.message
         }
         coroutineScope.launch(errorHandler){

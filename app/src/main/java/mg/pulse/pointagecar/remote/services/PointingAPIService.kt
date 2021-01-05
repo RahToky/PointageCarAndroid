@@ -1,22 +1,23 @@
 package mg.pulse.pointagecar.remote.services
 
 import mg.pulse.pointagecar.models.entities.Pointing
+import mg.pulse.pointagecar.remote.PointageAPI
 
 class PointingAPIService : BaseAPIService() {
 
-    suspend fun findRamassagesByDateAndCar(idCar:String, dateRamassage:String): List<Pointing>{
-        return pointingAPI?.findRamassagesByDateAndCar(idCar,dateRamassage)?: listOf()
+    suspend fun findPickupPointingByDateAndCar(idCar:String, dateRamassage:String): List<Pointing>{
+        return PointageAPI.getInstance(token)?.findPickupPointingByDateAndCar(idCar,dateRamassage)?: listOf()
     }
 
     suspend fun savePickupPointing(pointing: Pointing){
-        pointingAPI?.savePickupPointing(pointing)
+        PointageAPI.getInstance(token)?.savePickupPointing(pointing)
     }
 
-    suspend fun findLivraisonsByDateAndCar(idCar:String, dateLivraison:String): List<Pointing>{
-        return pointingAPI?.findLivraisonsByDateAndCar(idCar,dateLivraison)?: listOf()
+    suspend fun findDeliveryPointingByDateAndCar(idCar:String, dateLivraison:String): List<Pointing>{
+        return PointageAPI.getInstance(token)?.findDeliveryPointingByDateAndCar(idCar,dateLivraison)?: listOf()
     }
 
     suspend fun saveDeliveryPointing(pointing: Pointing){
-        pointingAPI?.saveDeliveryPointing(pointing)
+        PointageAPI.getInstance(token)?.saveDeliveryPointing(pointing)
     }
 }

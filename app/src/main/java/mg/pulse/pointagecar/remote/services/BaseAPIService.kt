@@ -1,7 +1,9 @@
 package mg.pulse.pointagecar.remote.services
 
-import mg.pulse.pointagecar.remote.PointageAPI
-
 abstract class BaseAPIService {
-    protected val pointingAPI: PointageAPI? = PointageAPI.getInstance()
+
+    companion object{
+        var token:String? = null
+    }
+
 }

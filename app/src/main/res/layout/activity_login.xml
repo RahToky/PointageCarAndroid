@@ -25,14 +25,17 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/auth_access_layout"
         android:background="@color/trans_white"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.3"
+        android:layout_weight="1.7"
         android:layout_margin="20dp"
         android:padding="20dp"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="visible">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_input"
@@ -45,7 +48,9 @@
             android:layout_height="50dp"
             android:paddingLeft="10dp"
             android:textColor="@color/white"
-            android:hint="Identifiant"/>
+            android:textCursorDrawable="@null"
+            android:textColorHint="@drawable/hint_state"
+            android:hint="@string/login"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password_input"
@@ -54,12 +59,24 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
             android:fontFamily="@font/roboto_medium"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:paddingLeft="10dp"
             android:textColor="@color/white"
-            android:hint="Mot de passe"/>
+            android:textCursorDrawable="@null"
+            android:textColorHint="@drawable/hint_state"
+            android:hint="@string/password"/>
+
+        <TextView
+            android:id="@+id/error_text"
+            android:fontFamily="@font/roboto_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white"
+            android:visibility="gone"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/connection_btn"
@@ -68,10 +85,40 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:text="CONNEXION"
+            android:text="@string/connection"
+            android:textAllCaps="true"
             android:textColor="@color/red"
             android:textStyle="bold"
             android:layout_gravity="bottom"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/auth_progress_layout"
+        android:background="@color/trans_white"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.7"
+        android:layout_margin="20dp"
+        android:padding="20dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/auth_progress"/>
+
+        <TextView
+            android:id="@+id/auth_progress_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/authentification_wait"
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 

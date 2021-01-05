@@ -52,8 +52,8 @@ class PointingDetailDialog : DialogFragment() {
 
     private fun displayCollaborateur(){
         matriculeTv?.text = collaborateur?.matricule
-        nomTv?.text = collaborateur?.lastName
-        prenomTv?.text = collaborateur?.firstName
+        nomTv?.text = collaborateur?.lastName?.toUpperCase()
+        prenomTv?.text = collaborateur?.firstName?.toLowerCase()?.capitalize()
         telephoneTv?.text = formatPhoneNumberMG(collaborateur?.phoneNumber)
     }
 

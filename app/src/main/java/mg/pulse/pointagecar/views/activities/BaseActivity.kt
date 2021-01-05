@@ -2,6 +2,8 @@ package mg.pulse.pointagecar.views.activities
 
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -57,6 +59,18 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         driverFirstNameTv = findViewById(R.id.drawerDriverFirstNameTv)
         driverLastNameTv = findViewById(R.id.drawerDriverLastNameTv)
         carImmatriculationTv = findViewById(R.id.drawerCarImmatriculationTv)
+    }
+
+    protected open fun fullScreen(){
+        /** Hiding Title bar of this activity screen */
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
+        /** Making this activity, full screen */
+        getWindow().setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
+        supportActionBar?.hide()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

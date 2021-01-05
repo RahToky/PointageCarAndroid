@@ -2,12 +2,9 @@ package mg.pulse.pointagecar.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import mg.pulse.pointagecar.models.entities.Pointing
-import mg.pulse.pointagecar.models.entities.User
 import mg.pulse.pointagecar.remote.services.PointingAPIService
-import mg.pulse.pointagecar.remote.services.UserAPIService
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,7 +26,7 @@ class PointingViewModel: BaseViewModel() {
         if(dateRamassage != null)
             this.datePointage = dateRamassage
         coroutineScope.launch(errorHandler){
-            pickupPointingList.value = pointageAPIService.findRamassagesByDateAndCar(idCar,datePointage)
+            pickupPointingList.value = pointageAPIService.findPickupPointingByDateAndCar(idCar,datePointage)
         }
     }
 
@@ -37,7 +34,7 @@ class PointingViewModel: BaseViewModel() {
         if(dateLivraison != null)
             this.datePointage = dateLivraison
         coroutineScope.launch(errorHandler){
-            deliveryPointingList.value = pointageAPIService.findLivraisonsByDateAndCar(idCar,datePointage)
+            deliveryPointingList.value = pointageAPIService.findDeliveryPointingByDateAndCar(idCar,datePointage)
         }
     }
 

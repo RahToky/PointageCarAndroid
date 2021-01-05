@@ -14,6 +14,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="ramassage">Ramassage</string>
     <string name="livraison">Livraison</string>
+    <string name="auth_empty_field_error">Veuillez remplir les champs</string>
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.
@@ -27,4 +28,10 @@
     <string name="deconnection">DECONNEXION</string>
     <string name="ramassage_caps">RAMASSAGE</string>
     <string name="livraison_caps">LIVRAISON</string>
+    <string name="login">Identifiant</string>
+    <string name="password">Mot de passe</string>
+    <string name="connection">connexion</string>
+    <string name="authentification_wait">authentification ...</string>
+    <string name="server_error">Une erreur est survenue veuillez réessayer ultérieurement</string>
+    <string name="login_or_pass_incorrect">Identifiant ou mot de passe incorrect</string>
 </resources>
