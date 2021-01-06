@@ -2,6 +2,7 @@ package mg.pulse.pointagecar.views.dialogs
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,11 +20,13 @@ class PointingDetailDialog : DialogFragment() {
     private var matriculeTv: TextView? = null
     private var nomTv: TextView? = null
     private var prenomTv: TextView? = null
+    private var profilInitial: TextView? = null
     private var telephoneTv: TextView? = null
     private var smsBtn:ImageButton? = null
     private var callBtn:ImageButton? = null
 
     private var collaborateur: User? = null
+    private var profilBg: GradientDrawable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,10 +82,12 @@ class PointingDetailDialog : DialogFragment() {
         telephoneTv = view.findViewById(R.id.telephoneTv)
         smsBtn = view.findViewById(R.id.smsBtn)
         callBtn = view.findViewById(R.id.callBtn)
+        profilInitial = view.findViewById(R.id.profil_name_initial)
     }
 
-    fun setCollaborateur(collaborateur: User){
+    fun setCollaborateur(collaborateur: User,bg: GradientDrawable){
         this.collaborateur = collaborateur
+        profilBg = bg
     }
 
 }

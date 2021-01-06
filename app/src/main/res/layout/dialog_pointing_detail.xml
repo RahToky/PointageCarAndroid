@@ -9,16 +9,27 @@
     android:paddingBottom="20dp"
     android:gravity="center">
 
-    <ImageView
+    <FrameLayout
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@drawable/ic_account_circle"
-        app:tint="@color/red"/>
+        android:background="@drawable/circular_bg_profil"
+        android:padding="2dp">
 
+        <TextView
+            android:id="@+id/profil_name_initial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="MR"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold"/>
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/matricule_tv"
-        android:fontFamily="@font/roboto_light"
+        android:fontFamily="@font/roboto_bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="IT0000"

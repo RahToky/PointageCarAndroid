@@ -37,7 +37,8 @@ class PointageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private var checkHourTv: TextView = itemView.findViewById(R.id.pointing_time_tv)
     private val itemLayout: LinearLayout = itemView.findViewById(R.id.item_layout)
 
-    fun setItem(ramassage: Pointing, bgColor: Int, itemClickListener: ItemClickListener) {val draw = GradientDrawable()
+    fun setItem(ramassage: Pointing, bgColor: Int, itemClickListener: ItemClickListener) {
+        val draw = GradientDrawable()
         draw.shape = GradientDrawable.OVAL
         draw.setColor(bgColor)
         profilNameInitial.text = getNameInitial(ramassage.collaborater?.firstName,ramassage.collaborater?.lastName?:"")
@@ -46,7 +47,7 @@ class PointageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fullNameTv.text = ramassage.collaborater?.lastName
         checkHourTv.text = ramassage.pointingHour?.subSequence(0, 5)
         itemLayout.setOnClickListener(View.OnClickListener {
-            itemClickListener.onClick(ramassage)
+            itemClickListener.onClick(ramassage,draw)
         })
     }
 }
