@@ -5,6 +5,7 @@
     android:background="@color/red">
 
     <LinearLayout
+        android:background="@drawable/gradient_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
@@ -19,13 +20,13 @@
             android:gravity="bottom"
             android:orientation="vertical">
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profilImageView"
+                android:id="@+id/profil_name_initial"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="20dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/profil_b4" />
+                android:src="@drawable/profil_driver" />
 
             <TextView
                 android:id="@+id/drawerDriverFirstNameTv"
@@ -46,6 +47,7 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
         <TextView
             android:id="@+id/drawerCarImmatriculationTv"
             android:fontFamily="@font/roboto_bold"
@@ -55,10 +57,14 @@
             android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:gravity="bottom|right"
+            android:autoSizeTextType="uniform"
             android:text="2\n2\n6\n6\n\nT\nB\nB"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:autoSizeMinTextSize="12sp"
+            android:autoSizeMaxTextSize="16sp"
+            android:autoSizeStepGranularity="2sp"
             android:textStyle="bold" />
     </LinearLayout>
+
 </RelativeLayout>

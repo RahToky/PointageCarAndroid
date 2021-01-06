@@ -14,6 +14,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
 import mg.pulse.pointagecar.R
+import mg.pulse.pointagecar.models.utils.SessionManager
 import mg.pulse.pointagecar.viewmodels.AuthViewModel
 import android.text.TextWatcher as TextWatcher1
 
@@ -26,7 +27,7 @@ class LoginActivity : BaseActivity() {
     private var connectionBtn: MaterialButton? = null
     private var errorTv: TextView? = null
 
-    private var authViewModel: AuthViewModel = AuthViewModel()
+    private var authViewModel: AuthViewModel = AuthViewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,8 +84,15 @@ class LoginActivity : BaseActivity() {
 
     private fun isLogged() {
         authViewModel.authResponse.observe(this, {
-            if (it.data.token != null)
+            if (it.data.idUser != null) {
+                val sessionManager = SessionManager(this)
+                sessionManager.saveUserId(it.data.idUser)
+                sessionManager.saveUserLogin(it.data.login)
+                //sessionManager.saveUserMatricule(it.data.matricule)
+                sessionManager.saveUserFirstName(it.data.firstName)
+                sessionManager.saveUserLastName(it.data.lastName)
                 startMainActivity()
+            }
         })
     }
 

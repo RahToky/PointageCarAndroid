@@ -6,14 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import mg.pulse.pointagecar.models.entities.Car
+import mg.pulse.pointagecar.models.entities.Pointing
 import mg.pulse.pointagecar.models.entities.User
+import mg.pulse.pointagecar.remote.services.PointingAPIService
 import mg.pulse.pointagecar.remote.services.UserAPIService
 
 class MainViewModel: BaseViewModel() {
 
     private val userAPIService: UserAPIService = UserAPIService()
-
-    var driver:LiveData<User> = MutableLiveData()
+    private val pointingAPIService: PointingAPIService = PointingAPIService()
+    private val pickupOk:MutableLiveData<Boolean> = MutableLiveData(false)
     var collaborater:MutableLiveData<User> = MutableLiveData()
 
     fun initCollaboraterByMatricule(matricule:String){
@@ -25,4 +28,29 @@ class MainViewModel: BaseViewModel() {
             collaborater.value = userAPIService.findUserByMatricule(matricule)
         }
     }
+
+    fun savePickupPointing(collaborateur:User, car: Car){
+        pickupOk.value = false
+        val errorHandler = CoroutineExceptionHandler { _, exception ->
+            Log.i("MyTag","savePickupPointing Exception === ${exception.message}")
+            errorMessage.value = exception.message
+        }
+        coroutineScope.launch(errorHandler){
+            pointingAPIService.savePickupPointing(Pointing(null,collaborateur,car,null,null))
+            pickupOk.value = true
+        }
+    }
+
+    fun saveDeliveryPointing(collaborateur:User, car: Car){
+        pickupOk.value = false
+        val errorHandler = CoroutineExceptionHandler { _, exception ->
+            Log.i("MyTag","savePickupPointing Exception === ${exception.message}")
+            errorMessage.value = exception.message
+        }
+        coroutineScope.launch(errorHandler){
+            pointingAPIService.saveDeliveryPointing(Pointing(null,collaborateur,car,null,null))
+            pickupOk.value = true
+        }
+    }
+
 }

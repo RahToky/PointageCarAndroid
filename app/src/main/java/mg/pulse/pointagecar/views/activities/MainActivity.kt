@@ -11,7 +11,6 @@ import android.os.Parcelable
 import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -20,8 +19,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import mg.pulse.pointagecar.R
-import mg.pulse.pointagecar.models.entities.Pointing
+import mg.pulse.pointagecar.models.entities.User
 import mg.pulse.pointagecar.models.utils.NfcUtils
+import mg.pulse.pointagecar.models.utils.SessionManager
 import mg.pulse.pointagecar.viewmodels.MainViewModel
 import mg.pulse.pointagecar.views.dialogs.OkPointingDialog
 import mg.pulse.pointagecar.views.fragments.FragmentTag
@@ -29,8 +29,6 @@ import mg.pulse.pointagecar.views.fragments.PointageListFragment
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    private val DRIVER_MATRICULE: String = "IT0001"
 
     private var mainViewModel: MainViewModel = MainViewModel()
 
@@ -107,9 +105,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView = findViewById(R.id.activity_main_nav_view)
         navigationView?.setNavigationItemSelectedListener(this)
 
-        driverFirstNameTv = findViewById(R.id.drawerDriverFirstNameTv)
-        driverLastNameTv = findViewById(R.id.drawerDriverLastNameTv)
-        carImmatriculationTv = findViewById(R.id.drawerCarImmatriculationTv)
+        driverFirstNameTv = navigationView!!.getHeaderView(0).findViewById(R.id.drawerDriverFirstNameTv)
+        driverLastNameTv = navigationView!!.getHeaderView(0).findViewById(R.id.drawerDriverLastNameTv)
+        carImmatriculationTv = navigationView!!.getHeaderView(0).findViewById(R.id.drawerCarImmatriculationTv)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -118,7 +116,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.ramassageMenu -> this.showFragment(FragmentTag.RAMASSAGE)
             R.id.livraisonMenu -> this.showFragment(FragmentTag.LIVRAISON)
             else -> {
-                this.showFragment(FragmentTag.RAMASSAGE)
+                logout()
             }
         }
         drawerLayout?.closeDrawer(GravityCompat.START)
@@ -175,12 +173,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun displayDriver() {
-        mainViewModel.initCollaboraterByMatricule(DRIVER_MATRICULE)
-        mainViewModel.collaborater.observe(this, {
-            Log.i("MyTag", "drvier name is ${it.fullName}")
-            driverFirstNameTv?.text = it.firstName
-            driverLastNameTv?.text = it.lastName
-        })
+        driverFirstNameTv?.text = SessionManager(this).getUserFirstName()?.toLowerCase()?.capitalize()
+        driverLastNameTv?.text = SessionManager(this).getUserLastName()
     }
 
 
@@ -227,17 +221,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES) as Array<Parcelable>
             if (rawMsgs != null) {
                 val messages: Array<NdefMessage?> = arrayOfNulls<NdefMessage>(rawMsgs.size)
-                var data = ""
+                var matricule = ""
                 for (i in rawMsgs.indices) {
                     messages[i] = rawMsgs[i] as NdefMessage
                     val records = messages[i]!!.records
                     for (record in records)
-                        data += "\n" + NfcUtils.getPaylodText(record) + "\n"
+                        matricule += "\n" + NfcUtils.getPaylodText(record) + "\n"
                 }
-                Log.i("from tag: ", data)
-                //Toast.makeText(this, data, Toast.LENGTH_LONG).show
-                displayOkPointingDialog()
+                getCollaboInfo(matricule)
             }
         }
+    }
+
+    private fun getCollaboInfo(matricule:String){
+        mainViewModel.initCollaboraterByMatricule(matricule)
+        mainViewModel.collaborater.observe(this, {
+            checkPointing(it)
+        })
+    }
+
+    private fun checkPointing(user: User){
+        //TODO
+        displayOkPointingDialog()
+    }
+
+    private fun logout(){
+        SessionManager(this).clear()
+        val mainIntent = Intent(this, LoginActivity::class.java)
+        startActivity(mainIntent)
+        finish()
     }
 }

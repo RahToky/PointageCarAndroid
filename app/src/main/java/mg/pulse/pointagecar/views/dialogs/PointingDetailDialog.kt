@@ -73,7 +73,7 @@ class PointingDetailDialog : DialogFragment() {
     }
 
     private fun initViews(view: View) {
-        matriculeTv = view.findViewById(R.id.matriculeTv)
+        matriculeTv = view.findViewById(R.id.matricule_tv)
         nomTv = view.findViewById(R.id.nomTv)
         prenomTv = view.findViewById(R.id.prenomTv)
         telephoneTv = view.findViewById(R.id.telephoneTv)

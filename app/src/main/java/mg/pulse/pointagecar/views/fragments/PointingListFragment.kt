@@ -23,7 +23,7 @@ import mg.pulse.pointagecar.models.utils.isNetworkConnected
 import mg.pulse.pointagecar.models.utils.toStringLeadingZero
 import mg.pulse.pointagecar.models.utils.toastNetworkNotConnected
 import mg.pulse.pointagecar.viewmodels.PointingViewModel
-import mg.pulse.pointagecar.views.PointageAdapter
+import mg.pulse.pointagecar.views.adapters.PointageAdapter
 import mg.pulse.pointagecar.views.callbacks.ItemClickListener
 import mg.pulse.pointagecar.views.dialogs.PointingDetailDialog
 import java.text.SimpleDateFormat
@@ -41,10 +41,7 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
     private var pointageDetailDialog: PointingDetailDialog = PointingDetailDialog()
     private lateinit var calendarLayout: LinearLayout
     private lateinit var mContext:Context
-
-    companion object{
-        fun newInstance(lifeCycleOwner:LifecycleOwner, fragmentTag: FragmentTag):PointageListFragment = PointageListFragment(lifeCycleOwner,fragmentTag)
-    }
+    private var colorList:IntArray? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +49,7 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
         savedInstanceState: Bundle?
     ): View? {
         val rootView: View = inflater.inflate(R.layout.fragment_pointing_list, container, false);
+        colorList = resources.getIntArray(R.array.color_for_collabo_list)
         initViews(rootView)
         initListeners()
         var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -106,7 +104,7 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
         ramassageSizeTv = view.findViewById(R.id.ramassageSizeTv)
         recyclerView = view.findViewById(R.id.recyclerView)
         swipeRefreshLayout = view.findViewById(R.id.swipe_layout)
-        pointageAdapter = PointageAdapter(this)
+        pointageAdapter = PointageAdapter(this,colorList!!)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = this.pointageAdapter
         recyclerView.addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
@@ -139,7 +137,7 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
 
     override fun onClick(item: Any) {
         var ramassage: Pointing = item as Pointing
-        pointageDetailDialog.setCollaborateur(ramassage.collaborater)
+        pointageDetailDialog.setCollaborateur(ramassage.collaborater!!)
         pointageDetailDialog.show(activity?.supportFragmentManager!!, null)
     }
 

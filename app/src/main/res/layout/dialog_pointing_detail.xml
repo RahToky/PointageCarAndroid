@@ -4,74 +4,68 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:paddingTop="20dp"
     android:paddingBottom="20dp"
-    android:gravity="center"
-    android:weightSum="12">
+    android:gravity="center">
 
     <ImageView
-        android:layout_width="0dp"
+        android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_weight="4"
         android:src="@drawable/ic_account_circle"
         app:tint="@color/red"/>
 
+
+    <TextView
+        android:id="@+id/matricule_tv"
+        android:fontFamily="@font/roboto_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IT0000"
+        android:textColor="@color/red"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/nomTv"
+        android:fontFamily="@font/roboto_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="nom"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="22sp"/>
+
+    <TextView
+        android:id="@+id/prenomTv"
+        android:fontFamily="@font/roboto_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="prénom"
+        android:textColor="@color/gray"
+        android:textSize="20sp"/>
+
     <View
-        android:layout_width="1px"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
         android:background="@color/gray"/>
 
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="6"
-        android:paddingLeft="20dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/matriculeTv"
-            android:fontFamily="@font/roboto_bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/red"
-            android:textSize="16sp"/>
-
-        <TextView
-            android:id="@+id/nomTv"
-            android:fontFamily="@font/roboto_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/prenomTv"
-            android:fontFamily="@font/roboto_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            android:textSize="20sp"/>
-
-        <TextView
-            android:id="@+id/telephoneTv"
-            android:fontFamily="@font/roboto_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            android:textSize="16sp"/>
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/telephoneTv"
+        android:fontFamily="@font/roboto_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="000 00 000 00"
+        android:textColor="@color/gray"
+        android:textSize="16sp"/>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/smsBtn"

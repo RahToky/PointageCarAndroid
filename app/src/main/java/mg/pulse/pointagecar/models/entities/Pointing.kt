@@ -7,11 +7,11 @@ import okhttp3.ResponseBody
 import okio.BufferedSource
 
 open class Pointing(
-    @SerializedName("id") @Expose val id: String,
-    @SerializedName("user") @Expose var collaborater: User,
-    @SerializedName("car") @Expose var car: Car,
-    @SerializedName(value="pickupdate", alternate= arrayOf("deliverydate")) @Expose var pointingDate: String,
-    @SerializedName(value="pickuphour", alternate= arrayOf("deliveryhour")) @Expose var pointingHour: String
+    @SerializedName("id") @Expose val id: String?,
+    @SerializedName("user") @Expose var collaborater: User?,
+    @SerializedName("car") @Expose var car: Car?,
+    @SerializedName(value="pickupdate", alternate= arrayOf("deliverydate")) @Expose var pointingDate: String?,
+    @SerializedName(value="pickuphour", alternate= arrayOf("deliveryhour")) @Expose var pointingHour: String?
 ) : ResponseBody() {
 
     override fun contentLength(): Long = contentLength()

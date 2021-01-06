@@ -1,15 +1,19 @@
 package mg.pulse.pointagecar.viewmodels
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import mg.pulse.pointagecar.R
 import mg.pulse.pointagecar.remote.models.AuthRequest
 import mg.pulse.pointagecar.remote.models.AuthResponse
 import mg.pulse.pointagecar.remote.services.UserAPIService
+import java.lang.ref.WeakReference
 
-class AuthViewModel:BaseViewModel() {
+class AuthViewModel(context: Context):BaseViewModel() {
 
+    private val weakContext:WeakReference<Context> = WeakReference(context)
     private val userAPIService: UserAPIService = UserAPIService()
     private var auth:AuthRequest? = null
     var authResponse: MutableLiveData<AuthResponse> = MutableLiveData()
@@ -17,8 +21,11 @@ class AuthViewModel:BaseViewModel() {
     fun authentificate(login:String, pass:String){
         auth = AuthRequest(login,pass)
         val errorHandler = CoroutineExceptionHandler { _, exception ->
-            Log.i("MyTag","initCollaboraterByMatricule Exception === ${exception}")
-            errorMessage.value = exception.message
+            if(exception.message?.contains("",true) == true){
+                errorMessage.value = weakContext.get()?.resources?.getString(R.string.server_error)
+            }else {
+                errorMessage.value = exception.message
+            }
         }
         coroutineScope.launch(errorHandler){
             authResponse.value = userAPIService.authentificate(auth!!)
