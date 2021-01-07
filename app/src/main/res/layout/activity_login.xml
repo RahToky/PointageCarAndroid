@@ -122,7 +122,8 @@
             android:fontFamily="@font/roboto_light"
             android:gravity="center"
             android:text="@string/authentification_wait"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
 
     </LinearLayout>
 
