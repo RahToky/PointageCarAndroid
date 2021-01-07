@@ -11,9 +11,10 @@ open class Pointing(
     @SerializedName("user") @Expose var collaborater: User?,
     @SerializedName("car") @Expose var car: Car?,
     @SerializedName(value="pickupdate", alternate= arrayOf("deliverydate")) @Expose var pointingDate: String?,
-    @SerializedName(value="pickuphour", alternate= arrayOf("deliveryhour")) @Expose var pointingHour: String?
+    @SerializedName(value="pickuphour", alternate= arrayOf("deliveryhour")) @Expose var pointingHour: String?,
+    @SerializedName(value="deleted") @Expose var deleted: Boolean?
 ) : ResponseBody() {
-    constructor() : this(null,null,null,null,null) {}
+    constructor() : this(null,null,null,null,null,null) {}
     override fun contentLength(): Long = contentLength()
     override fun contentType(): MediaType? = contentType()
     override fun source(): BufferedSource {

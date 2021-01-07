@@ -7,7 +7,8 @@ import mg.pulse.pointagecar.remote.PointageAPI
 class PointingAPIService : BaseAPIService() {
 
     suspend fun findPickupPointingByDateAndCar(idCar:String, dateRamassage:String): List<Pointing>{
-        return PointageAPI.getInstance(token)?.findPickupPointingByDateAndCar(idCar,dateRamassage)?: listOf()
+        val res = PointageAPI.getInstance(token)?.findPickupPointingByDateAndCar(idCar,dateRamassage)?: listOf()
+        return res.filter { it.deleted == false }
     }
 
     suspend fun savePickupPointing(pointing: Pointing){
@@ -15,7 +16,8 @@ class PointingAPIService : BaseAPIService() {
     }
 
     suspend fun findDeliveryPointingByDateAndCar(idCar:String, dateLivraison:String): List<Pointing>{
-        return PointageAPI.getInstance(token)?.findDeliveryPointingByDateAndCar(idCar,dateLivraison)?: listOf()
+        val  res = PointageAPI.getInstance(token)?.findDeliveryPointingByDateAndCar(idCar,dateLivraison)?: listOf()
+        return res.filter { it.deleted == false }
     }
 
     suspend fun saveDeliveryPointing(pointing: Pointing){

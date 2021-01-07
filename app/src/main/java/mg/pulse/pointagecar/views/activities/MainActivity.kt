@@ -44,8 +44,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var pickupListFragment: PointageListFragment? = null
     private var deliveryListFragment: PointageListFragment? = null
     private val waitingDialog: WaitingDialog = WaitingDialog()
-    private val successDialog: SuccessDialog = SuccessDialog()
+    private var successDialog: SuccessDialog = SuccessDialog()
     private var activeFragment:FragmentTag = FragmentTag.RAMASSAGE
+    private var isChecking:Boolean = false
 
     private var nfcAdapter: NfcAdapter? = null
 
@@ -218,12 +219,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun displaySuccessDialog(test:Boolean) {
-        if(test) {
-            if (!successDialog.isAdded)
-                successDialog.show(supportFragmentManager, "checked")
-        }else{
-            if (successDialog.isAdded)
-                successDialog.dismiss()
+        try {
+            if (test) {
+                if (!successDialog.isAdded)
+                    successDialog.show(supportFragmentManager, "checked")
+                else {
+                    successDialog = SuccessDialog()
+                    displaySuccessDialog(true)
+                }
+            } else {
+                if (successDialog.isAdded)
+                    successDialog.dismiss()
+            }
+        }catch (e:Exception){
+
         }
     }
 
@@ -247,18 +256,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         if (NfcAdapter.ACTION_NDEF_DISCOVERED == intent.action) {
-            val rawMsgs: Array<Parcelable> =
-                intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES) as Array<Parcelable>
-            if (rawMsgs != null) {
-                val messages: Array<NdefMessage?> = arrayOfNulls<NdefMessage>(rawMsgs.size)
-                var matricule = ""
-                for (i in rawMsgs.indices) {
-                    messages[i] = rawMsgs[i] as NdefMessage
-                    val records = messages[i]!!.records
-                    for (record in records)
-                        matricule += "\n" + NfcUtils.getPaylodText(record) + "\n"
+            if(!isChecking) {
+                isChecking = true
+                val rawMsgs: Array<Parcelable> =
+                    intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES) as Array<Parcelable>
+                if (rawMsgs != null) {
+                    val messages: Array<NdefMessage?> = arrayOfNulls<NdefMessage>(rawMsgs.size)
+                    var matricule = ""
+                    for (i in rawMsgs.indices) {
+                        messages[i] = rawMsgs[i] as NdefMessage
+                        val records = messages[i]!!.records
+                        for (record in records)
+                            matricule += "\n" + NfcUtils.getPaylodText(record) + "\n"
+                    }
+                    matricule = matricule.trim()
+                        .substring(matricule.indexOf("I") - 1, matricule.indexOf("I") + 5) //IT0000
+                    getCollaboInfoThenCheckPointing(matricule)
                 }
-                getCollaboInfoThenCheckPointing(matricule.trim())
             }
         }
     }
@@ -287,6 +301,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 displayWaitingDialog(false)
                 displaySuccessDialog(true)
                 refreshPointingList()
+                isChecking = false
             }
         })
     }

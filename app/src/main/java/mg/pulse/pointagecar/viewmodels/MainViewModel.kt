@@ -34,7 +34,7 @@ class MainViewModel: BaseViewModel() {
             errorMessage.value = exception.message
         }
         coroutineScope.launch(errorHandler){
-            pointingAPIService.savePickupPointing(Pointing(null,collaborateur,car,null,null))
+            pointingAPIService.savePickupPointing(Pointing(null,collaborateur,car,null,null,null))
             pointingSuccess.value = true
         }
     }
@@ -46,7 +46,7 @@ class MainViewModel: BaseViewModel() {
             errorMessage.value = exception.message
         }
         coroutineScope.launch(errorHandler){
-            pointingAPIService.saveDeliveryPointing(Pointing(null,collaborateur,car,null,null))
+            pointingAPIService.saveDeliveryPointing(Pointing(null,collaborateur,car,null,null,null))
             pointingSuccess.value = true
         }
     }
