@@ -1,9 +1,7 @@
 package mg.pulse.pointagecar.viewmodels
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import mg.pulse.pointagecar.models.entities.Car
@@ -16,7 +14,7 @@ class MainViewModel: BaseViewModel() {
 
     private val userAPIService: UserAPIService = UserAPIService()
     private val pointingAPIService: PointingAPIService = PointingAPIService()
-    private val pickupOk:MutableLiveData<Boolean> = MutableLiveData(false)
+    var pointingSuccess:MutableLiveData<Boolean> = MutableLiveData(false)
     var collaborater:MutableLiveData<User> = MutableLiveData()
 
     fun initCollaboraterByMatricule(matricule:String){
@@ -30,26 +28,26 @@ class MainViewModel: BaseViewModel() {
     }
 
     fun savePickupPointing(collaborateur:User, car: Car){
-        pickupOk.value = false
+        pointingSuccess.value = false
         val errorHandler = CoroutineExceptionHandler { _, exception ->
             Log.i("MyTag","savePickupPointing Exception === ${exception.message}")
             errorMessage.value = exception.message
         }
         coroutineScope.launch(errorHandler){
             pointingAPIService.savePickupPointing(Pointing(null,collaborateur,car,null,null))
-            pickupOk.value = true
+            pointingSuccess.value = true
         }
     }
 
     fun saveDeliveryPointing(collaborateur:User, car: Car){
-        pickupOk.value = false
+        pointingSuccess.value = false
         val errorHandler = CoroutineExceptionHandler { _, exception ->
             Log.i("MyTag","savePickupPointing Exception === ${exception.message}")
             errorMessage.value = exception.message
         }
         coroutineScope.launch(errorHandler){
             pointingAPIService.saveDeliveryPointing(Pointing(null,collaborateur,car,null,null))
-            pickupOk.value = true
+            pointingSuccess.value = true
         }
     }
 

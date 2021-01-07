@@ -7,8 +7,8 @@ import okhttp3.ResponseBody
 import okio.BufferedSource
 
 class Car(
-    @SerializedName("id") @Expose var id: String,
-    @SerializedName("immatriculation") @Expose var immatriculation: String,
+    @SerializedName("id") @Expose var id: String?,
+    @SerializedName("immatriculation") @Expose var immatriculation: String?,
     @SerializedName("chauffeur") @Expose var driver: User
 ) : ResponseBody() {
 

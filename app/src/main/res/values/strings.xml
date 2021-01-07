@@ -34,4 +34,8 @@
     <string name="authentification_wait">authentification ...</string>
     <string name="server_error">Une erreur est survenue veuillez réessayer ultérieurement</string>
     <string name="login_or_pass_incorrect">Identifiant ou mot de passe incorrect</string>
+    <string name="success">success</string>
+    <string name="identification">identification</string>
+    <string name="signature">signature</string>
+    <string name="wait_please">patientez s"il vous plait</string>
 </resources>

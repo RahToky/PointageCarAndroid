@@ -94,6 +94,8 @@
 
     </LinearLayout>
 
+    <!-- WAITING LAYOUT -->
+
     <LinearLayout
         android:id="@+id/auth_progress_layout"
         android:background="@color/trans_white"

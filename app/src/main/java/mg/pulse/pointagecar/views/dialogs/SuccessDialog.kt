@@ -13,12 +13,12 @@ import java.util.*
 import kotlin.concurrent.schedule
 
 
-class OkPointingDialog(var displayTime: Long = 1000) : DialogFragment() {
+class SuccessDialog(var displayTime: Long = 1000) : DialogFragment() {
 
     private var okPointingLogo:ImageView? = null
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        val rootView: View = inflater.inflate(R.layout.dialog_ok_pointing, container, false);
+        val rootView: View = inflater.inflate(R.layout.dialog_success, container, false);
         initViews(rootView)
         startLogoAnim()
         return rootView

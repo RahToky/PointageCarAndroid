@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import mg.pulse.pointagecar.models.entities.Car
+import mg.pulse.pointagecar.models.entities.User
 
 class SessionManager(var context:Context) {
     private val PREFERENCE_KEY = "p_session"
@@ -47,17 +48,24 @@ class SessionManager(var context:Context) {
         editor.commit()
     }
 
-    fun saveCarId(id: String){
+    fun saveCarId(id: String?){
         var editor:SharedPreferences.Editor = sharedPreferences.edit()
         editor.putString(CAR_ID,id)
         editor.commit()
     }
 
-    fun saveCarImmatriculation(imm: String){
+    fun saveCarImmatriculation(imm: String?){
         var editor:SharedPreferences.Editor = sharedPreferences.edit()
         editor.putString(CAR_IMM,imm)
         editor.commit()
     }
+
+    fun saveCar(car:Car){
+        saveCarId(car.id)
+        saveCarImmatriculation(car.immatriculation)
+    }
+
+    fun getCar():Car = Car(getCarId(),getCarImmatriculation(),User(getUserId(),getUserMatricule(),firstName = getUserFirstName(), lastName = getUserLastName()))
 
     fun getUserId():String? = sharedPreferences.getString(USER_ID,null)
     fun getUserLogin():String? = sharedPreferences.getString(USER_LOGIN,null)

@@ -11,6 +11,7 @@ import android.os.Parcelable
 import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -19,12 +20,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import mg.pulse.pointagecar.R
-import mg.pulse.pointagecar.models.entities.Car
 import mg.pulse.pointagecar.models.entities.User
 import mg.pulse.pointagecar.models.utils.NfcUtils
 import mg.pulse.pointagecar.models.utils.SessionManager
 import mg.pulse.pointagecar.viewmodels.MainViewModel
-import mg.pulse.pointagecar.views.dialogs.OkPointingDialog
+import mg.pulse.pointagecar.views.dialogs.SuccessDialog
+import mg.pulse.pointagecar.views.dialogs.WaitingDialog
 import mg.pulse.pointagecar.views.fragments.FragmentTag
 import mg.pulse.pointagecar.views.fragments.PointageListFragment
 
@@ -42,7 +43,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var carImmatriculationTv: TextView? = null
     private var ramassageListFragment: PointageListFragment? = null
     private var livraisonListFragment: PointageListFragment? = null
-    private val okPointingDialog: OkPointingDialog = OkPointingDialog()
+    private val waitingDialog: WaitingDialog = WaitingDialog()
+    private val successDialog: SuccessDialog = SuccessDialog()
     private var activeFragment:FragmentTag = FragmentTag.RAMASSAGE
 
     private var nfcAdapter: NfcAdapter? = null
@@ -54,6 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         configToolbar(getString(R.string.app_name))
         configureDrawerLayout()
         configureNavigationView()
+        handleViewModelsError()
         showFirstFragment()
         initNfcAdapter()
         displayDriver()
@@ -214,9 +217,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun displayOkPointingDialog() {
-        if (!okPointingDialog.isAdded)
-            okPointingDialog.show(supportFragmentManager, "checked")
+    private fun displaySuccessDialog(test:Boolean) {
+        if(test) {
+            if (!successDialog.isAdded)
+                successDialog.show(supportFragmentManager, "checked")
+        }else{
+            if (successDialog.isAdded)
+                successDialog.dismiss()
+        }
+    }
+
+    private fun displayWaitingDialog(test:Boolean) {
+        if(test) {
+            if (!waitingDialog.isAdded) {
+                waitingDialog.show(supportFragmentManager, "waiting")
+                waitingDialog.isCancelable = false
+            }
+        }else{
+            if(waitingDialog.isAdded)
+                waitingDialog.dismiss()
+        }
+    }
+
+    private fun setWaitingDialogMessage(message:String){
+        if (waitingDialog.isAdded)
+            waitingDialog.displayMessage(message)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -233,25 +258,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     for (record in records)
                         matricule += "\n" + NfcUtils.getPaylodText(record) + "\n"
                 }
-                getCollaboInfoAndCheckPointing(matricule)
+                getCollaboInfoThenCheckPointing(matricule.trim())
             }
         }
     }
 
-    private fun getCollaboInfoAndCheckPointing(matricule:String){
+    private fun getCollaboInfoThenCheckPointing(matricule:String){
+        displayWaitingDialog(true)
+        setWaitingDialogMessage("${resources.getString(R.string.identification)} ...")
         mainViewModel.initCollaboraterByMatricule(matricule)
         mainViewModel.collaborater.observe(this, {
+            setWaitingDialogMessage("${resources.getString(R.string.signature)} ...")
             checkPointing(it)
         })
     }
 
     private fun checkPointing(collaborater: User){
-        val car = Car(sessionManager?.getCarId()!!,sessionManager?.getCarImmatriculation()!!,User(sessionManager?.getUserId(),sessionManager?.getUserMatricule()))
         when(activeFragment){
-            FragmentTag.RAMASSAGE -> mainViewModel.savePickupPointing(collaborater, car)
-            else -> mainViewModel.saveDeliveryPointing(collaborater,car)
+            FragmentTag.RAMASSAGE -> mainViewModel.savePickupPointing(collaborater, sessionManager?.getCar()!!)
+            else -> mainViewModel.saveDeliveryPointing(collaborater,sessionManager?.getCar()!!)
         }
-        displayOkPointingDialog()
+        handlePointingSuccess()
+    }
+
+    private fun handlePointingSuccess(){
+        mainViewModel.pointingSuccess.observe(this,{
+            if(it){
+                displayWaitingDialog(false)
+                displaySuccessDialog(true)
+            }
+        })
     }
 
     private fun logout(){
@@ -259,5 +295,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val mainIntent = Intent(this, LoginActivity::class.java)
         startActivity(mainIntent)
         finish()
+    }
+
+    private fun handleViewModelsError(){
+        mainViewModel.errorMessage?.observe(this,{
+            displayWaitingDialog(false)
+            Toast.makeText(this,it,Toast.LENGTH_LONG).show()
+        })
     }
 }

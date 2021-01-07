@@ -13,7 +13,7 @@ open class Pointing(
     @SerializedName(value="pickupdate", alternate= arrayOf("deliverydate")) @Expose var pointingDate: String?,
     @SerializedName(value="pickuphour", alternate= arrayOf("deliveryhour")) @Expose var pointingHour: String?
 ) : ResponseBody() {
-
+    constructor() : this(null,null,null,null,null) {}
     override fun contentLength(): Long = contentLength()
     override fun contentType(): MediaType? = contentType()
     override fun source(): BufferedSource {

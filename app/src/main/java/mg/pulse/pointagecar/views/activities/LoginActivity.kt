@@ -103,8 +103,9 @@ class LoginActivity : BaseActivity() {
     private fun isCarExist(){
         authViewModel.car.observe(this, {
             if (it != null) {
-                sessionManager?.saveCarId(it.id)
-                sessionManager?.saveCarImmatriculation(it.immatriculation)
+                //sessionManager?.saveCarId(it.id)
+                //sessionManager?.saveCarImmatriculation(it.immatriculation)
+                sessionManager?.saveCar(it)
                 startMainActivity()
             }
         })

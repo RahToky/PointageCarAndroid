@@ -44,7 +44,7 @@ interface PointageAPI {
     suspend fun findDeliveryPointingByDateAndCar(@Query("idcar") idCar:String, @Query("date") date:String): List<Pointing>
 
     @POST("api/delivery-pointing/save")
-    suspend fun saveDeliveryPointing( pointing:Pointing)
+    suspend fun saveDeliveryPointing(@Body pointing:Pointing)
 
     // USERS
 
