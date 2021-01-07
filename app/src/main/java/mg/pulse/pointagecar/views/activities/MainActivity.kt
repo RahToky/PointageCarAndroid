@@ -33,7 +33,7 @@ import mg.pulse.pointagecar.views.fragments.PointageListFragment
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var mainViewModel: MainViewModel = MainViewModel()
-    private var sessionManager:SessionManager? = null
+    private var sessionManager: SessionManager? = null
     protected lateinit var toolbar: Toolbar
     protected var toolbarTitle: TextView? = null
     protected var drawerLayout: DrawerLayout? = null
@@ -45,8 +45,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var deliveryListFragment: PointageListFragment? = null
     private val waitingDialog: WaitingDialog = WaitingDialog()
     private var successDialog: SuccessDialog = SuccessDialog()
-    private var activeFragment:FragmentTag = FragmentTag.RAMASSAGE
-    private var isChecking:Boolean = false
+    private var activeFragment: FragmentTag = FragmentTag.RAMASSAGE
+    private var isChecking: Boolean = false
 
     private var nfcAdapter: NfcAdapter? = null
 
@@ -112,9 +112,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView = findViewById(R.id.activity_main_nav_view)
         navigationView?.setNavigationItemSelectedListener(this)
 
-        driverFirstNameTv = navigationView!!.getHeaderView(0).findViewById(R.id.drawerDriverFirstNameTv)
-        driverLastNameTv = navigationView!!.getHeaderView(0).findViewById(R.id.drawerDriverLastNameTv)
-        carImmatriculationTv = navigationView!!.getHeaderView(0).findViewById(R.id.drawerCarImmatriculationTv)
+        driverFirstNameTv =
+            navigationView!!.getHeaderView(0).findViewById(R.id.drawerDriverFirstNameTv)
+        driverLastNameTv =
+            navigationView!!.getHeaderView(0).findViewById(R.id.drawerDriverLastNameTv)
+        carImmatriculationTv =
+            navigationView!!.getHeaderView(0).findViewById(R.id.drawerCarImmatriculationTv)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -182,7 +185,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun displayDriver() {
-        driverFirstNameTv?.text = SessionManager(this).getUserFirstName()?.toLowerCase()?.capitalize()
+        driverFirstNameTv?.text =
+            SessionManager(this).getUserFirstName()?.toLowerCase()?.capitalize()
         driverLastNameTv?.text = SessionManager(this).getUserLastName()
     }
 
@@ -218,37 +222,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun displaySuccessDialog(test:Boolean) {
-        try {
-            if (test) {
-                if (!successDialog.isAdded)
-                    successDialog.show(supportFragmentManager, "checked")
-                else {
-                    successDialog = SuccessDialog()
-                    displaySuccessDialog(true)
-                }
-            } else {
-                if (successDialog.isAdded)
-                    successDialog.dismiss()
-            }
-        }catch (e:Exception){
-
-        }
+    private fun displaySuccessDialog() {
+        val successDialog = SuccessDialog()
+        successDialog.show(supportFragmentManager, "checked")
     }
 
-    private fun displayWaitingDialog(test:Boolean) {
-        if(test) {
+    private fun displayWaitingDialog(test: Boolean) {
+        if (test) {
             if (!waitingDialog.isAdded) {
                 waitingDialog.show(supportFragmentManager, "waiting")
                 waitingDialog.isCancelable = false
             }
-        }else{
-            if(waitingDialog.isAdded)
+        } else {
+            if (waitingDialog.isAdded)
                 waitingDialog.dismiss()
         }
     }
 
-    private fun setWaitingDialogMessage(message:String){
+    private fun setWaitingDialogMessage(message: String) {
         if (waitingDialog.isAdded)
             waitingDialog.displayMessage(message)
     }
@@ -256,7 +247,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         if (NfcAdapter.ACTION_NDEF_DISCOVERED == intent.action) {
-            if(!isChecking) {
+            if (!isChecking) {
                 isChecking = true
                 val rawMsgs: Array<Parcelable> =
                     intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES) as Array<Parcelable>
@@ -277,7 +268,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun getCollaboInfoThenCheckPointing(matricule:String){
+    private fun getCollaboInfoThenCheckPointing(matricule: String) {
         displayWaitingDialog(true)
         setWaitingDialogMessage("${resources.getString(R.string.identification)} ...")
         mainViewModel.initCollaboraterByMatricule(matricule)
@@ -287,41 +278,44 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
-    private fun checkPointing(collaborater: User){
-        when(activeFragment){
-            FragmentTag.RAMASSAGE -> mainViewModel.savePickupPointing(collaborater, sessionManager?.getCar()!!)
-            else -> mainViewModel.saveDeliveryPointing(collaborater,sessionManager?.getCar()!!)
+    private fun checkPointing(collaborater: User) {
+        when (activeFragment) {
+            FragmentTag.RAMASSAGE -> mainViewModel.savePickupPointing(
+                collaborater,
+                sessionManager?.getCar()!!
+            )
+            else -> mainViewModel.saveDeliveryPointing(collaborater, sessionManager?.getCar()!!)
         }
         handlePointingSuccess()
     }
 
-    private fun handlePointingSuccess(){
-        mainViewModel.pointingSuccess.observe(this,{
-            if(it){
+    private fun handlePointingSuccess() {
+        mainViewModel.pointingSuccess.observe(this, {
+            if (it) {
                 displayWaitingDialog(false)
-                displaySuccessDialog(true)
+                displaySuccessDialog()
                 refreshPointingList()
                 isChecking = false
             }
         })
     }
 
-    private fun logout(){
+    private fun logout() {
         SessionManager(this).clear()
         val mainIntent = Intent(this, LoginActivity::class.java)
         startActivity(mainIntent)
         finish()
     }
 
-    private fun handleViewModelsError(){
-        mainViewModel.errorMessage?.observe(this,{
+    private fun handleViewModelsError() {
+        mainViewModel.errorMessage?.observe(this, {
             displayWaitingDialog(false)
-            Toast.makeText(this,it,Toast.LENGTH_LONG).show()
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         })
     }
 
-    private fun refreshPointingList(){
-        if(activeFragment == FragmentTag.RAMASSAGE)
+    private fun refreshPointingList() {
+        if (activeFragment == FragmentTag.RAMASSAGE)
             pickupListFragment?.initPointingList()
         else
             deliveryListFragment?.initPointingList()
