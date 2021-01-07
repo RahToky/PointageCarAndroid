@@ -1,5 +1,6 @@
 package mg.pulse.pointagecar.remote.services
 
+import mg.pulse.pointagecar.models.entities.Car
 import mg.pulse.pointagecar.models.entities.Pointing
 import mg.pulse.pointagecar.remote.PointageAPI
 
@@ -19,5 +20,9 @@ class PointingAPIService : BaseAPIService() {
 
     suspend fun saveDeliveryPointing(pointing: Pointing){
         PointageAPI.getInstance(token)?.saveDeliveryPointing(pointing)
+    }
+
+    suspend fun findCarById(id: String): Car? {
+        return PointageAPI.getInstance(token)?.findCarById(id)
     }
 }

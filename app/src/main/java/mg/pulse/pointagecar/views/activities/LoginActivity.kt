@@ -26,6 +26,9 @@ class LoginActivity : BaseActivity() {
     private var passwordInput: TextInputEditText? = null
     private var connectionBtn: MaterialButton? = null
     private var errorTv: TextView? = null
+    private var sessionManager:SessionManager? = null
+
+    private val CAR_ID:String = "1"
 
     private var authViewModel: AuthViewModel = AuthViewModel(this)
 
@@ -33,9 +36,11 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         fullScreen()
         setContentView(R.layout.activity_login)
+        sessionManager = SessionManager(this)
         initViews()
         initListeners()
         isLogged()
+        isCarExist()
         handleViewModelsError()
     }
 
@@ -85,12 +90,21 @@ class LoginActivity : BaseActivity() {
     private fun isLogged() {
         authViewModel.authResponse.observe(this, {
             if (it.data.idUser != null) {
-                val sessionManager = SessionManager(this)
-                sessionManager.saveUserId(it.data.idUser)
-                sessionManager.saveUserLogin(it.data.login)
+                sessionManager?.saveUserId(it.data.idUser)
+                sessionManager?.saveUserLogin(it.data.login)
                 //sessionManager.saveUserMatricule(it.data.matricule)
-                sessionManager.saveUserFirstName(it.data.firstName)
-                sessionManager.saveUserLastName(it.data.lastName)
+                sessionManager?.saveUserFirstName(it.data.firstName)
+                sessionManager?.saveUserLastName(it.data.lastName)
+                authViewModel.findCarById(CAR_ID)
+            }
+        })
+    }
+
+    private fun isCarExist(){
+        authViewModel.car.observe(this, {
+            if (it != null) {
+                sessionManager?.saveCarId(it.id)
+                sessionManager?.saveCarImmatriculation(it.immatriculation)
                 startMainActivity()
             }
         })

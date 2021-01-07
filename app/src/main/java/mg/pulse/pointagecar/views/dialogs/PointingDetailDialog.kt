@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment
 import mg.pulse.pointagecar.R
 import mg.pulse.pointagecar.models.entities.User
 import mg.pulse.pointagecar.models.utils.formatPhoneNumberMG
+import mg.pulse.pointagecar.models.utils.getNameInitial
 
 class PointingDetailDialog : DialogFragment() {
 
@@ -25,7 +26,7 @@ class PointingDetailDialog : DialogFragment() {
     private var smsBtn:ImageButton? = null
     private var callBtn:ImageButton? = null
 
-    private var collaborateur: User? = null
+    private var collaborater: User? = null
     private var profilBg: GradientDrawable? = null
 
     override fun onCreateView(
@@ -36,8 +37,8 @@ class PointingDetailDialog : DialogFragment() {
         val rootView: View = inflater.inflate(R.layout.dialog_pointing_detail, container, false);
         initViews(rootView)
         initListeners(rootView)
-        if(collaborateur != null){
-            displayCollaborateur()
+        if(collaborater != null){
+            displayCollaborater()
         }
         return rootView
     }
@@ -53,24 +54,25 @@ class PointingDetailDialog : DialogFragment() {
         }
     }
 
-    private fun displayCollaborateur(){
-        matriculeTv?.text = collaborateur?.matricule
-        nomTv?.text = collaborateur?.lastName?.toUpperCase()
-        prenomTv?.text = collaborateur?.firstName?.toLowerCase()?.capitalize()
-        telephoneTv?.text = formatPhoneNumberMG(collaborateur?.phoneNumber)
+    private fun displayCollaborater(){
+        matriculeTv?.text = collaborater?.matricule
+        nomTv?.text = collaborater?.lastName?.toUpperCase()
+        prenomTv?.text = collaborater?.firstName?.toLowerCase()?.capitalize()
+        telephoneTv?.text = formatPhoneNumberMG(collaborater?.phoneNumber)
+        profilInitial?.text = getNameInitial(collaborater?.firstName,collaborater?.lastName!!)
     }
 
     private fun initListeners(view: View){
         callBtn?.setOnClickListener {
             var intent: Intent = Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:${collaborateur?.phoneNumber}"))
+            intent.setData(Uri.parse("tel:${collaborater?.phoneNumber}"))
             startActivity(intent);
         }
 
         smsBtn?.setOnClickListener {
-            val uri = Uri.parse("smsto:${collaborateur?.phoneNumber}")
+            val uri = Uri.parse("smsto:${collaborater?.phoneNumber}")
             val intent = Intent(Intent.ACTION_SENDTO, uri)
-            intent.putExtra("sms_body", "Bonjour ${collaborateur?.lastName},\n")
+            intent.putExtra("sms_body", "Bonjour ${collaborater?.lastName},\n")
             startActivity(intent)
         }
     }
@@ -86,7 +88,7 @@ class PointingDetailDialog : DialogFragment() {
     }
 
     fun setCollaborateur(collaborateur: User,bg: GradientDrawable){
-        this.collaborateur = collaborateur
+        this.collaborater = collaborateur
         profilBg = bg
     }
 

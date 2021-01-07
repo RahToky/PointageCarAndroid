@@ -3,6 +3,7 @@ package mg.pulse.pointagecar.views.fragments
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -135,9 +136,9 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
         })
     }
 
-    override fun onClick(item: Any) {
+    override fun onClick(item: Any, bg: GradientDrawable) {
         var ramassage: Pointing = item as Pointing
-        pointageDetailDialog.setCollaborateur(ramassage.collaborater!!)
+        pointageDetailDialog.setCollaborateur(ramassage.collaborater!!,bg)
         pointageDetailDialog.show(activity?.supportFragmentManager!!, null)
     }
 

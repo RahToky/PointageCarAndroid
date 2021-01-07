@@ -1,5 +1,6 @@
 package mg.pulse.pointagecar.remote
 
+import mg.pulse.pointagecar.models.entities.Car
 import mg.pulse.pointagecar.models.entities.Pointing
 import mg.pulse.pointagecar.models.entities.User
 import mg.pulse.pointagecar.remote.models.AuthRequest
@@ -49,5 +50,11 @@ interface PointageAPI {
 
     @GET("api/user/matricule")
     suspend fun findUserByMatricule(@Query("matricule") matricule:String): User
+
+
+    // CARS
+    @GET("api/car/id")
+    suspend fun findCarById(@Query("id") id:String): Car
+
 
 }

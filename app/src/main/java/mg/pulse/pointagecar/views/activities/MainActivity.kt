@@ -19,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import mg.pulse.pointagecar.R
+import mg.pulse.pointagecar.models.entities.Car
 import mg.pulse.pointagecar.models.entities.User
 import mg.pulse.pointagecar.models.utils.NfcUtils
 import mg.pulse.pointagecar.models.utils.SessionManager
@@ -31,7 +32,7 @@ import mg.pulse.pointagecar.views.fragments.PointageListFragment
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var mainViewModel: MainViewModel = MainViewModel()
-
+    private var sessionManager:SessionManager? = null
     protected lateinit var toolbar: Toolbar
     protected var toolbarTitle: TextView? = null
     protected var drawerLayout: DrawerLayout? = null
@@ -42,12 +43,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var ramassageListFragment: PointageListFragment? = null
     private var livraisonListFragment: PointageListFragment? = null
     private val okPointingDialog: OkPointingDialog = OkPointingDialog()
+    private var activeFragment:FragmentTag = FragmentTag.RAMASSAGE
 
     private var nfcAdapter: NfcAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        sessionManager = SessionManager(this)
         configToolbar(getString(R.string.app_name))
         configureDrawerLayout()
         configureNavigationView()
@@ -149,6 +152,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun showLivraisonListFragement() {
         setToolbarTitle(FragmentTag.LIVRAISON.toString())
+        activeFragment = FragmentTag.LIVRAISON
         if (this.livraisonListFragment == null) this.livraisonListFragment = PointageListFragment(
             this,
             FragmentTag.LIVRAISON
@@ -158,6 +162,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun showRamassageListFragment() {
         setToolbarTitle(FragmentTag.RAMASSAGE.toString())
+        activeFragment = FragmentTag.RAMASSAGE
         if (this.ramassageListFragment == null) this.ramassageListFragment = PointageListFragment(
             this,
             FragmentTag.RAMASSAGE
@@ -228,20 +233,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     for (record in records)
                         matricule += "\n" + NfcUtils.getPaylodText(record) + "\n"
                 }
-                getCollaboInfo(matricule)
+                getCollaboInfoAndCheckPointing(matricule)
             }
         }
     }
 
-    private fun getCollaboInfo(matricule:String){
+    private fun getCollaboInfoAndCheckPointing(matricule:String){
         mainViewModel.initCollaboraterByMatricule(matricule)
         mainViewModel.collaborater.observe(this, {
             checkPointing(it)
         })
     }
 
-    private fun checkPointing(user: User){
-        //TODO
+    private fun checkPointing(collaborater: User){
+        val car = Car(sessionManager?.getCarId()!!,sessionManager?.getCarImmatriculation()!!,User(sessionManager?.getUserId(),sessionManager?.getUserMatricule()))
+        when(activeFragment){
+            FragmentTag.RAMASSAGE -> mainViewModel.savePickupPointing(collaborater, car)
+            else -> mainViewModel.saveDeliveryPointing(collaborater,car)
+        }
         displayOkPointingDialog()
     }
 

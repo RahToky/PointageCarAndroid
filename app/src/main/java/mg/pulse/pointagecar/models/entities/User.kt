@@ -7,11 +7,12 @@ import okhttp3.ResponseBody
 import okio.BufferedSource
 
 data class User(
-    @SerializedName("id") @Expose var id: String,
-    @SerializedName("matricule") @Expose var matricule: String,
-    @SerializedName("lastname") @Expose var lastName: String,
-    @SerializedName("firstname") @Expose var firstName: String,
-    @SerializedName("phonenumber") @Expose var phoneNumber: String
+    @SerializedName("id") @Expose var id: String?=null,
+    @SerializedName("matricule") @Expose var matricule: String?=null,
+    @SerializedName("lastname") @Expose var lastName: String?=null,
+    @SerializedName("firstname") @Expose var firstName: String?=null,
+    @SerializedName("phonenumber") @Expose var phoneNumber: String?=null,
+    @SerializedName("email") @Expose var email: String?=null
 ) : ResponseBody() {
 
     val fullName: String
