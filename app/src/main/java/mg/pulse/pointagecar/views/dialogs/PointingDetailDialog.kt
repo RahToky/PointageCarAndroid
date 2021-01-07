@@ -60,6 +60,7 @@ class PointingDetailDialog : DialogFragment() {
         prenomTv?.text = collaborater?.firstName?.toLowerCase()?.capitalize()
         telephoneTv?.text = formatPhoneNumberMG(collaborater?.phoneNumber)
         profilInitial?.text = getNameInitial(collaborater?.firstName,collaborater?.lastName!!)
+        profilInitial?.background = this.profilBg
     }
 
     private fun initListeners(view: View){
@@ -89,7 +90,7 @@ class PointingDetailDialog : DialogFragment() {
 
     fun setCollaborateur(collaborateur: User,bg: GradientDrawable){
         this.collaborater = collaborateur
-        profilBg = bg
+        this.profilBg = bg
     }
 
 }
