@@ -91,7 +91,7 @@ class PointageListFragment(var lifeCycleOwner:LifecycleOwner, val fragmentTag:Fr
         }
     }
 
-    private fun initPointingList(){
+    fun initPointingList(){
         swipeRefreshLayout.isRefreshing = true
         if(fragmentTag == FragmentTag.RAMASSAGE)
             getRamassageList()

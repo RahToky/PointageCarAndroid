@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var driverFirstNameTv: TextView? = null
     private var driverLastNameTv: TextView? = null
     private var carImmatriculationTv: TextView? = null
-    private var ramassageListFragment: PointageListFragment? = null
-    private var livraisonListFragment: PointageListFragment? = null
+    private var pickupListFragment: PointageListFragment? = null
+    private var deliveryListFragment: PointageListFragment? = null
     private val waitingDialog: WaitingDialog = WaitingDialog()
     private val successDialog: SuccessDialog = SuccessDialog()
     private var activeFragment:FragmentTag = FragmentTag.RAMASSAGE
@@ -156,21 +156,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun showLivraisonListFragement() {
         setToolbarTitle(FragmentTag.LIVRAISON.toString())
         activeFragment = FragmentTag.LIVRAISON
-        if (this.livraisonListFragment == null) this.livraisonListFragment = PointageListFragment(
+        if (this.deliveryListFragment == null) this.deliveryListFragment = PointageListFragment(
             this,
             FragmentTag.LIVRAISON
         )
-        this.startTransactionFragment(this.livraisonListFragment!!)
+        this.startTransactionFragment(this.deliveryListFragment!!)
     }
 
     private fun showRamassageListFragment() {
         setToolbarTitle(FragmentTag.RAMASSAGE.toString())
         activeFragment = FragmentTag.RAMASSAGE
-        if (this.ramassageListFragment == null) this.ramassageListFragment = PointageListFragment(
+        if (this.pickupListFragment == null) this.pickupListFragment = PointageListFragment(
             this,
             FragmentTag.RAMASSAGE
         )
-        this.startTransactionFragment(this.ramassageListFragment!!)
+        this.startTransactionFragment(this.pickupListFragment!!)
     }
 
     private fun startTransactionFragment(fragment: Fragment) {
@@ -286,6 +286,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             if(it){
                 displayWaitingDialog(false)
                 displaySuccessDialog(true)
+                refreshPointingList()
             }
         })
     }
@@ -302,5 +303,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             displayWaitingDialog(false)
             Toast.makeText(this,it,Toast.LENGTH_LONG).show()
         })
+    }
+
+    private fun refreshPointingList(){
+        if(activeFragment == FragmentTag.RAMASSAGE)
+            pickupListFragment?.initPointingList()
+        else
+            deliveryListFragment?.initPointingList()
     }
 }

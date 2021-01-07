@@ -119,6 +119,7 @@
             android:id="@+id/auth_progress_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
             android:gravity="center"
             android:text="@string/authentification_wait"
             android:textColor="@color/white"/>
